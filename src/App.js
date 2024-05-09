@@ -2,11 +2,14 @@ import React from "react";
 import { Route, Routes } from "react-router-dom";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import Sidebar from "./components/sidebar";
+import SignUp from "./pages/SignUp"
 import Login from "./pages/Login";
 import Beranda from "./pages/Beranda";
 import DaftarBuku from "./pages/DaftarBuku";
 import Peminjaman from "./pages/Peminjaman";
 import Akun from "./pages/Akun";
+import AddBook from "./pages/AddBook";
+import EditBook from "./pages/EditBook";
 
 function App() {
   return (
@@ -14,6 +17,7 @@ function App() {
       <div>
         <Routes>
           <Route path="/" element={<Login/>} />
+          <Route path="/reg" element={<SignUp/>} />
         </Routes>
       </div>
       <div className="App">
@@ -23,6 +27,8 @@ function App() {
           <Route path="/daftarbuku" element={<DaftarBuku/>} />
           <Route path="/peminjaman" element={<Peminjaman/>} />
           <Route path="/akun" element={<Akun/>} />
+          <Route path="/tambahbuku" element={<AddBook/>} />
+          <Route path="/editbuku" element={<EditBook/>} />
         </Routes>
       </div>
     </>
