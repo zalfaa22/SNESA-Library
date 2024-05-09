@@ -1,24 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { Route, Routes } from "react-router-dom";
+import Sidebar from "./components/sidebar";
+import Login from "./pages/Login";
+import Beranda from "./pages/Beranda";
+import DaftarBuku from "./pages/DaftarBuku";
+import Peminjaman from "./pages/Peminjaman";
+import Akun from "./pages/Akun";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <div>
+        <Routes>
+          <Route path="/" element={<Login/>} />
+        </Routes>
+      </div>
+      <div className="App">
+        <Sidebar />
+        <Routes>
+          <Route path="/beranda" element={<Beranda/>} />
+          <Route path="/daftarbuku" element={<DaftarBuku/>} />
+          <Route path="/peminjaman" element={<Peminjaman/>} />
+          <Route path="/akun" element={<Akun/>} />
+        </Routes>
+      </div>
+    </>
   );
 }
 
