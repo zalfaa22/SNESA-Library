@@ -48,6 +48,9 @@
   #parentM li a:hover {
     background-color: #078D41;
 }
+.sidebar .nav-item.active {
+    background-color: #078D41;
+  }
 
 
 .toggle-btn-menu {
@@ -69,6 +72,9 @@
     min-height: 100%;
     height: auto;
     padding: 0;
+}
+.minimized .sidebar-icon {
+    width: 25px;
 }
 .content {
     min-height: fit-content;

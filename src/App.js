@@ -1,5 +1,6 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
+import "bootstrap-icons/font/bootstrap-icons.css";
 import Sidebar from "./components/sidebar";
 import Login from "./pages/Login";
 import Beranda from "./pages/Beranda";
