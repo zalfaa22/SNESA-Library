@@ -4,6 +4,7 @@ import Sidebar from "./components/sidebar";
 import Login from "./pages/Login";
 import Beranda from "./pages/Beranda";
 import DaftarBuku from "./pages/DaftarBuku";
+import DetailBuku from "./pages/DetailBuku";
 import Peminjaman from "./pages/Peminjaman";
 import Akun from "./pages/Akun";
 
@@ -22,6 +23,7 @@ function App() {
           <Route path="/daftarbuku" element={<DaftarBuku/>} />
           <Route path="/peminjaman" element={<Peminjaman/>} />
           <Route path="/akun" element={<Akun/>} />
+          <Route path="/detailbuku" element={<DetailBuku/>} />
         </Routes>
       </div>
     </>
