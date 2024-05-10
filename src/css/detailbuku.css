@@ -1,0 +1,100 @@
+@media (max-width: 1440px) {
+  .detailBuku {
+    color: #141e46;
+
+    .detail-container {
+      .bagian-kiri {
+        border-radius: 15px;
+        img {
+        }
+
+        h3 {
+          font-size: 25px;  
+        }
+
+        .sub-desc {
+          border-bottom: 1px solid red;
+          font-size: 13px;
+
+          .nama-kolom {
+            
+          }
+
+          .isi {
+          }
+        }
+      }
+
+      .bagian-kanan {
+        .ket {
+            .total-books,
+            .available {
+                border-radius: 10px;
+                p {
+                    font-size: 13px;
+                }
+                h4 {
+                    font-size: 40px;
+                    color: #644D69;
+                }
+            }
+        }
+        .action {
+          button {
+            border: 0;
+            border-radius: 5px;
+            font-size: 12px;
+            color: white;
+
+            &.edit-book {
+              background: #6e5771;
+              svg {
+                width: 13px;
+              }
+            }
+
+            &.delete-book {
+              background: #f51b01;
+
+              img {
+                width: 13px;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .bagianBorrowHistory {
+        .table {
+            .custom-table {
+            border-radius: 10px;
+        }
+            .table-color {
+                --bs-table-bg: #8DECB4;
+                font-size: 15px;
+                /* --bs-table-color: white; */
+            }
+
+            tbody {
+                font-size: 12px;
+            }
+
+            button {
+                background: #41B06E;
+                color: white;
+                font-size: 12px;
+                border: 0;
+                border-radius: 5px;
+            }
+        }
+
+    }
+  }
+}
+
+@media (max-width: 768px) {
+}
+
+@media (max-width: 325px) {
+}
