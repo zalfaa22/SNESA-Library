@@ -1,7 +1,56 @@
-import React from "react";
+import React, { useState } from "react";
 import "../css/login.css";
+import axios from "axios";
 
 export default function Login() {
+    const [state, setState] = useState({
+        name: "",
+        nuptk: "",
+        password: "",
+        logged: false,
+        message: ""
+    });
+
+    const handleChange = (e) => {
+        setState({
+            ...state,
+            [e.target.name]: e.target.value
+        });
+    };
+
+    const handleLogin = (e) => {
+        e.preventDefault();
+        let data = {
+            nuptk: state.nuptk,
+            password: state.password,
+        };
+        let url = "http://localhost:8080/user/login";
+        axios
+            .post(url, data)
+            .then((response) => {
+                setState({ logged: response.data.data.logged });
+                if (response.status === 200) {
+                    let id = response.data.data.id;
+                    let nuptk = response.data.data.nuptk;
+                    let token = response.data.data.token;
+                    localStorage.setItem("id", id);
+                    localStorage.setItem("nuptk", nuptk);
+                    localStorage.setItem("token", token);
+                    alert("Success Login");
+                    window.location.href = "/beranda";
+                } else {
+                    alert(response.data.message);
+                    setState({ message: response.data.message });
+                }
+            })
+            .catch((error) => {
+                console.log("error", error.response.status);
+                if (error.response.status === 500 || error.response.status === 404) {
+                    window.alert("Failed to login");
+                }
+            });
+    };
+
   return (
     <>
       <div className="vh-100" style={{backgroundColor: "#F8F4EC"}}>
@@ -33,25 +82,31 @@ export default function Login() {
                 <img src="/assets/logo.svg" alt="" className="img-fluid"/>
                 </div>
                 <div className="form-outline mb-3 mt-5">
-                  <label className="form-label fs-6" htmlFor="form2Example18">
-                    User
+                  <label className="form-label fs-6" htmlFor="nuptk">
+                    NIP
                   </label>
                   <input
-                    type="name"
-                    id="form2Example18"
+                    type="number"
+                    id="nuptk"
+                    name="nuptk"
+                    value={state.nuptk}
+                    onChange={handleChange}
                     className="form-control form-control-lg fs-6"
-                    placeholder="nama user"
+                    placeholder="Masukkan NIP anda ..."
                   />
                 </div>
                 <div className="form-outline mb-4">
-                  <label className="form-label fs-6" htmlFor="form2Example18">
+                  <label className="form-label fs-6" htmlFor="password">
                     Password
                   </label>
                   <input
-                    type="email"
-                    id="form2Example18"
+                    type="password"
+                    id="password"
+                    name="password"
+                    value={state.password}
+                    onChange={handleChange}
                     className="form-control form-control-lg fs-6"
-                    placeholder="******"
+                    placeholder="Masukkan password anda ..."
                   />
                 </div>
                 <div className="pt-1  ">
@@ -59,6 +114,7 @@ export default function Login() {
                     <button
                       className="btn btn-block w-100 text-white fs-6"
                       type="button"
+                      onClick={handleLogin}
                       style={{ backgroundColor: "#009B4C" }}
                     >
                       Get started
