@@ -30,7 +30,7 @@ export default function Login() {
             .then((response) => {
                 setState({ logged: response.data.data.logged });
                 if (response.status === 200) {
-                    let id = response.data.data.id_user;
+                    let id = response.data.data.id;
                     let nuptk = response.data.data.nuptk;
                     let token = response.data.data.token;
                     localStorage.setItem("id", id);
