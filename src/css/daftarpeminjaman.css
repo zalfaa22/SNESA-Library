@@ -1,0 +1,71 @@
+@media (max-width: 1440px) {
+  .search-container {
+    border: 1px solid #41b06e;
+    border-radius: 10px;
+    img {
+      width: 15px;
+    }
+
+    input {
+      width: 170px;
+      max-width: 170px;
+      &::placeholder {
+        color: #141e46;
+        font-size: 13px;
+      }
+      &:hover {
+        outline: none;
+        focus: none;
+      }
+    }
+  }
+
+  .table-pinjam {
+    .table {
+      /* --bs-table-border-color: #41b06e; */
+      border: 1px solid #41b06e;
+        border-radius: 10px;
+      
+      .table-color {
+        --bs-table-bg: #41b06e;
+        font-size: 13px;
+        border-radius: 10px;
+        th {
+         /* padding: 0; */
+        }
+        /* --bs-table-color: white; */
+      }
+
+      tbody {
+        font-size: 12px;
+        --bs-table-bg: transparent;
+
+        button {
+          background: #41b06e;
+          color: white;
+          font-size: 12px;
+          border: 0;
+          border-radius: 5px;
+        }
+
+        .bulat {
+          width: 10px;
+          height: 10px;
+          background: #FD0000; /*Overdue*/
+          /* background: #00FD29; Returned */
+          /* background: #FD9800; Due day */
+          /* background: #FDE400; Days left */
+          border-radius: 50px;
+        }
+      }
+
+     
+    }
+  }
+}
+
+@media (max-width: 768px) {
+}
+
+@media (max-width: 325px) {
+}

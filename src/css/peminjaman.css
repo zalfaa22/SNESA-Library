@@ -1,378 +1,52 @@
-.custom-table {
-    border-radius: 10px; /* Adjust the radius as needed */
-    overflow: hidden; /* Ensure rounded corners are visible */
-  }
-  .title {
-    font-size: 12px;
-  }
-  .text-1 {
-    font-size: 14px;
-  }
-  button.add-berita-btn {
-    margin-right: 4px;
-    margin-top: 5px;
-    margin-bottom: 5px;
-    padding: 5px;
-    font-size: 10px !important;
-  }
-  .add-icon {
-    width: 11px;
-  }
-  button.search-berita {
-    margin-right: 4px;
-    margin-top: 5px;
-    margin-bottom: 5px;
-    padding: 5px;
-    margin: 0px;
-    font-size: 10px !important;
-    outline: 1.2px solid #009B4C !important;
-    border: none;
-  }
-  .search-icon-berita {
-    width: 11px;
-  }
-  .berita-btn1, .berita-btn2, .berita-btn3{
-    display: none !important;
-  }
-  .berita-btn1:hover,
-  .berita-btn2:hover,
-  .berita-btn3:hover {
-    color: white !important;
-    background: #027a48 !important;
-  }
-  .dropdown-berita {
-    display: inline;
-    margin-right: 4px;
-    margin-top: 5px;
-    margin-bottom: 5px;
-    padding: 5px;
-    margin: 0px;
-    font-size: 10px !important;
-    /* outline: 1.2px solid #009B4C !important;
-    border: none; */
-  }
-  .table-container-berita {
-    overflow-x: auto;
-    white-space: nowrap; /* Prevent text wrapping */
-    margin-top: 0;
-  }
-  button.edit-btn {
-    background-color: transparent;
-    outline: none;
-    border: none;
-    padding: 0;
-  }
-  button.del-btn {
-    background-color: transparent;
-    outline: none;
-    border: none;
-    padding: 0;
-  }
-  button.draft-btn {
-    background-color: #fffaeb;
-    border: none;
-    border-radius: 4px;
-    color: #b86e00;
-    font-size: 12px;
-    font-weight: 600;
-    padding: 3px;
-  }
-  button.publish-btn {
-    background-color: #ecfdf3;
-    border: none;
-    border-radius: 4px;
-    color: #027a48;
-    font-size: 12px;
-    font-weight: 600;
-    padding: 3px;
-  }
-  
-  /* EVENT */
-  .event-modal {
-    width: 50%;
-    padding: 2rem;
-  }
-  .event-modal1 {
-    font-size: 19px;
-  }
-  .event-modal2 {
-    font-size: 12px;
-    font-weight: medium;
-  }
-  button.btn-modal1 {
-    font-size: 8px;
-    color: black;
-  }
-  button.btn-modal2 {
-    font-size: 8px;
-    color: white;
-  }
-  .event-img {
-      width: 16px;
-  }
-  .event-title {
-      font-size: 12px;
-  }
-  .edit-delete-icon {
-      width: 12px;
-      margin-left: 6px !important;
-      padding: 0px !important;
-  }
-  .edit-delete-text {
-      display: none;
-  }
-  button.edit-btn-event, button.del-btn-event {
-      background-color: transparent;
-    outline: none;
-    border: none;
-    padding: 0;
-    font-size: 9px;
-  }
-  .switch-button {
-    width: 20px;
-    height: 12px;
-    background-color: #7f56d9;
-    border-radius: 15px;
-    display: flex;
-    cursor: pointer;
-    position: relative;
-  }
-  .slider {
-    width: 9px;
-    height: 9px;
-    background-color: white;
-    border-radius: 50%;
-    transition: transform 0.3s;
-    position: absolute;
-    top: 1.5px;
-    left: 0;
-  }
-  .switch-button.on .slider {
-    transform: translateX(9.7px);
-  }
-  .switch-button.off .slider {
-    transform: translateX(1.5px);
-  }
-  
-  @media (min-width: 425px) {
-    button.add-berita-btn {
-      margin-right: 8px;
-      margin-top: 8px;
-      margin-bottom: 8px;
-      padding: 8px;
-      font-size: 13px !important;
+@media (max-width: 1440px) {
+  .detail-container {
+    .cover-section {
+      .gambar-container {
+        background: #8decb4;
+        border-radius: 10px;
+        height: 60%;
+        max-height: 60%;
+      }
+
+      button {
+        background: #078d41;
+        color: white;
+        border: 0;
+        border-radius: 8px;
+      }
     }
-    .add-icon {
-      width: 13px;
+
+    .deskripsi {
+      .form {
+        .event {
+          border: 1px solid #41b06e;
+          border-radius: 8px;
+          font-size: 13px;
+        }
+      }
     }
-    button.search-berita {
-      display: inline !important;
-      margin-right: 8px;
-      margin-bottom: 8px;
-      padding: 8px;
-      padding-right: 12px;
-      padding-left: 12px;
-      margin: 0px;
-      font-size: 13px !important;
-      outline: 1.2px solid #009B4C !important;
-      border: none;
-    }
-    .search-icon-berita {
-      width: 13px;
-    }
+
+   
   }
-  
-  @media (min-width: 473px) {
-    .berita-btn1 {
-      display: inline !important;
-      margin-right: 8px;
-      margin-bottom: 8px;
-      padding: 8px;
-      font-size: 13px !important;
-      outline: 1.2px solid #009B4C !important;
-      border: none;
+  .modal-body {
+    img {
+        width: 100px;
     }
-    .berita-btn2 {
-      display: inline !important;
-      margin-right: 8px;
-      margin-bottom: 8px;
-      padding: 8px;
-      font-size: 13px !important;
+
+    button {
+        background: #33C481;
+        border: 0;
+        /* border-radius: ; */
+        border-radius: inherit;
+        box-shadow: 0 0.75em 0 0 blue;
+        transform: translate3d(0, 0.75em, -1em);
+        
     }
-    .berita-btn3 {
-      display: inline !important;
-      margin-right: 8px;
-      margin-bottom: 8px;
-      padding: 8px;
-      font-size: 13px !important;
-    }
-    .dropdown-berita {
-      display: none;
-    }
-  
-    /* EVENT */
-    .event-img {
-      width: 27px;
-  }
-  .event-title {
-      font-size: 14px;
-  }
-  .edit-delete-icon {
-      width: 16px;
-      margin-left: 18px !important;
-      /* padding: 12px !important; */
-      padding-bottom: 3px !important;
-  }
-  .edit-delete-text {
-      display: inline;
-      font-size: 14px;
-  }
-  button.edit-btn-event, button.del-btn-event {
-      background-color: transparent;
-    outline: none;
-    border: none;
-    padding: 0;
-    font-size: 9px;
-  }
-  .switch-button {
-      width: 36px;
-      height: 20px;
-      background-color: #7f56d9;
-      border-radius: 15px;
-      display: flex;
-      cursor: pointer;
-      position: relative;
-    }
-    .slider {
-      width: 16px;
-      height: 16px;
-      background-color: white;
-      border-radius: 50%;
-      transition: transform 0.3s;
-      position: absolute;
-      top: 2px;
-      left: 0;
-    }
-    .switch-button.on .slider {
-      transform: translateX(18px);
-    }
-    .switch-button.off .slider {
-      transform: translateX(2px);
-    }
-    button.edit-btn-event, button.del-btn-event {
-      background-color: transparent;
-    outline: none;
-    border: none;
-    padding: 0;
-  }
-  }
-  
-  @media (min-width: 768px) {
-    button.add-berita-btn {
-      margin-right: 12px;
-      margin-top: 5px;
-      margin-bottom: 5px;
-      padding: 11px;
-      font-size: 16px !important;
-    }
-    .add-icon {
-      width: 16px;
-      padding-bottom: 3px;
-    }
-    button.search-berita {
-      margin-right: 12px;
-      /* margin-top: 5px; */
-      margin-bottom: 5px;
-      padding: 7px;
-      padding-right: 19px;
-      padding-left: 19px;
-      margin: 0px;
-      font-size: 16px !important;
-      outline: 1.2px solid #009B4C !important;
-      border: none;
-    }
-    .search-icon-berita {
-      width: 16px;
-    }
-    .berita-btn1 {
-      display: inline !important;
-      margin-right: 8px;
-      /* margin-top: 8px; */
-      margin-bottom: 8px;
-      padding: 8px;
-      font-size: 16px !important;
-      outline: 1.2px solid #009B4C !important;
-      border: none;
-    }
-    .berita-btn2 {
-      display: inline !important;
-      margin-right: 8px;
-      /* margin-top: 8px; */
-      margin-bottom: 8px;
-      padding: 8px;
-      font-size: 16px !important;
-    }
-    .berita-btn3 {
-      display: inline !important;
-      margin-right: 8px;
-      /* margin-top: 8px; */
-      margin-bottom: 8px;
-      padding: 8px;
-      font-size: 16px !important;
-    }
-  
-    /* EVENT */
-    .event-modal {
-      max-width: 100%;
-    }
-    .event-modal1 {
-      font-size: 32px;
-    }
-    .event-modal2 {
-      font-size: 14px;
-      font-weight: medium;
-    }
-    button.btn-modal1 {
-      font-size: 14px;
-      color: black;
-    }
-    button.btn-modal2 {
-      font-size: 14px;
-      color: white;
-    }
-    .event-img {
-      width: auto;
-  }
-    .event-title {
-      font-size: 14px;
-      padding-left: 6px;
-  }
-  .edit-delete-icon {
-      width: 16px;
-      margin-left: 18px !important;
-      /* padding: 12px !important; */
-      padding-bottom: 3px !important;
-  }
-  .edit-delete-text {
-      display: inline;
-      font-size: 16px;
-  }
-  button.edit-btn-event, button.del-btn-event {
-      background-color: transparent;
-    outline: none;
-    border: none;
-    padding: 0;
-    font-size: 9px;
-  }
-  .switch-button {
-      width: 36px;
-      height: 20px;
-      margin-right: 23px;
-      background-color: #7f56d9;
-      border-radius: 15px;
-      display: flex;
-      cursor: pointer;
-      position: relative;
-    }
-  }
-  
+        }
+}
+
+@media (max-width: 768px) {
+}
+
+@media (max-width: 325px) {
+}

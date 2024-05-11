@@ -161,7 +161,7 @@ function Sidebar() {
                 </li> */}
 
                 <li className="nav-item text-white my-1">
-                  <a href="/peminjaman" className="nav-link" aria-current="page">
+                  <a href="/daftarpeminjaman" className="nav-link" aria-current="page">
                     <img src="/assets/sidebar/peminjaman-icon.svg" alt='' className='sidebar-icon' />
                     {!minimized && <span className="ms-2 text-white">Peminjaman</span>}
                   </a>

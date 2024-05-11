@@ -1,5 +1,66 @@
 import React, { useState } from "react";
 import "../css/daftarbuku.css";
+import { Link, useLocation } from "react-router-dom";
+import axios from "axios";
+
+// Dummy data berita
+export const daftarBuku = [
+  {
+    id: "1",
+    judul: "Not Here to be Liked",
+    penulis: "Mikael Quach",
+    tahunTerbit: "2021",
+    category: "ensiklopedia",
+    isbn: "1234593",
+    gambar: "../assets/daftarbuku/book1.svg",
+  },
+  {
+    id: "2",
+    judul: "novel Not Here to be Liked",
+    penulis: "Michele Quach",
+    tahunTerbit: "2021",
+    category: "novel",
+    isbn: "81",
+    gambar: "../assets/daftarbuku/book1.svg",
+  },
+  {
+    id: "3",
+    judul: "komik Not Here to be Liked",
+    penulis: "Michele Quach",
+    tahunTerbit: "2021",
+    category: "komik",
+    isbn: "1234593",
+    gambar: "../assets/daftarbuku/book1.svg",
+  },
+  {
+    id: "4",
+    judul: "referensi Not Here to be Liked",
+    penulis: "Michele Quach",
+    tahunTerbit: "2021",
+    category: "referensi",
+    isbn: "1234593",
+    gambar: "../assets/daftarbuku/book1.svg",
+  },
+  {
+    id: "5",
+    judul: "Not Here to be Liked",
+    penulis: "Michele Quach",
+    tahunTerbit: "2021",
+    category: "ensiklopedia",
+    isbn: "1234593",
+    gambar: "../assets/daftarbuku/book1.svg",
+  },
+  {
+    id: "6",
+    judul: "Not Here to be Liked",
+    penulis: "Michele Quach",
+    tahunTerbit: "2021",
+    category: "ensiklopedia",
+    isbn: "1234593",
+    gambar: "../assets/daftarbuku/book1.svg",
+  },
+  // Tambahkan berita lainnya di sini
+];
 
 export default function DaftarBuku() {
   const [categoryBuku, setCategoryBuku] = useState("");
@@ -25,58 +86,7 @@ export default function DaftarBuku() {
     console.log("Search Query:", searchQuery);
   };
 
-  // Dummy data berita
-  const daftarBuku = [
-    {
-      judul: "Not Here to be Liked",
-      penulis: "Mikael Quach",
-      tahunTerbit: "2021",
-      category: "ensiklopedia",
-      isbn: "1234593",
-      gambar: "../assets/daftarbuku/book1.svg",
-    },
-    {
-      judul: "novel Not Here to be Liked",
-      penulis: "Michele Quach",
-      tahunTerbit: "2021",
-      category: "novel",
-      isbn: "81",
-      gambar: "../assets/daftarbuku/book1.svg",
-    },
-    {
-      judul: "komik Not Here to be Liked",
-      penulis: "Michele Quach",
-      tahunTerbit: "2021",
-      category: "komik",
-      isbn: "1234593",
-      gambar: "../assets/daftarbuku/book1.svg",
-    },
-    {
-      judul: "referensi Not Here to be Liked",
-      penulis: "Michele Quach",
-      tahunTerbit: "2021",
-      category: "referensi",
-      isbn: "1234593",
-      gambar: "../assets/daftarbuku/book1.svg",
-    },
-    {
-      judul: "Not Here to be Liked",
-      penulis: "Michele Quach",
-      tahunTerbit: "2021",
-      category: "ensiklopedia",
-      isbn: "1234593",
-      gambar: "../assets/daftarbuku/book1.svg",
-    },
-    {
-      judul: "Not Here to be Liked",
-      penulis: "Michele Quach",
-      tahunTerbit: "2021",
-      category: "ensiklopedia",
-      isbn: "1234593",
-      gambar: "../assets/daftarbuku/book1.svg",
-    },
-    // Tambahkan berita lainnya di sini
-  ];
+  
 
   const filteredBuku = daftarBuku
     .filter((buku) => {
@@ -95,10 +105,27 @@ export default function DaftarBuku() {
         return buku.isbn.toLowerCase().includes(searchQuery.toLowerCase());
       }
     });
+  
+  // ===============================================================================================
+
+  const getDaftarBuku = () => {
+    let url = "http://localhost:8080/book";
+    axios
+      .get(url, this.headerConfig())
+      .then((response) => {
+        this.setState({
+          typeroom: response.data.data,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
 
   return (
-    <div className="content">
-      <div className="daftarBuku">
+    <div className="content daftarBuku">
+      {/* <div className="daftarBuku"> */}
         <div className="px-3 px-md-5 py-4">
           <div className="mb-4 mb-md-5">
             <div className="d-flex justify-content-between">
@@ -123,7 +150,7 @@ export default function DaftarBuku() {
                     className="img-fluid"
                     alt=""
                   />
-                  <form onSubmit={handleSearchSubmit}>
+                  <form onSubmit={handleSearchSubmit} className="m-0 p-0">
                   <input
                       type="text"
                       className="m-0 p-0 fw-semibold bg-transparent border-0"
@@ -147,24 +174,30 @@ export default function DaftarBuku() {
                   />
                 </form>
               )} */}
-              <div className="dropdown">
-                <button
-                  className="btn dropdown-toggle filter-container bg-transparent px-3 py-2 gap-2 d-flex align-items-center"
+             
+              <div className="dropdown m-0 p-0 d-flex align-items-center">
+                <a
+                  className="btn dropdown-toggle fw-semibold gap-2 d-flex align-items-center"
                   type="button"
                   id="dropdownMenuButton1"
                   data-bs-toggle="dropdown"
                   aria-expanded="false"
+                  role="button"
+                  placeholder=""
                 >
                   <img src="./assets/daftarbuku/Sort.svg" alt="" />
-                  {`${selectedCategory}`} {/* Tampilkan kategori terpilih di dalam button */}
-                </button>
+                  {/* <p className="filter-drop fw-semibold m-0 p-0"> */}
+                    {` ${selectedCategory}`}
+                  {/* </p> */}
+                  {/* {` ${selectedCategory}` className="fw-semibold"} Tampilkan kategori terpilih di dalam button */}
+                </a>
                 <ul
-                  className="dropdown-menu"
+                  className="dropdown-menu m-0 p-0"
                   aria-labelledby="dropdownMenuButton1"
                 >
                   <li>
                     <a
-                      className="dropdown-item"
+                      className="dropdown-item m-0"
                       href="#"
                       onClick={() => handleCategoryBukuClick("")}
                     >
@@ -229,7 +262,7 @@ export default function DaftarBuku() {
                 <img src={buku.gambar} alt="" className="d-flex mx-auto" />
                 <div className="desc-container mt-3">
                   <h3 className="p-0 m-0 fw-bold mb-2">
-                    {buku.judul.substring(0, 17)}...
+                    {buku.judul}
                   </h3>
                   <div className="desc d-flex align-items-center gap-2 mb-1">
                     <svg
@@ -251,16 +284,28 @@ export default function DaftarBuku() {
                 </div>
                 <div className="card-bottom ">
                   <button className="detail py-1 px-3 mt-4 bg-transparent">
-                  <a href="/detailbuku" className="p-0 m-0 fw-semibold">
+                  <Link
+                    to={{
+                      pathname: `/detailbuku/${buku.id}`,
+                      state: { selecteditem: buku },
+                    }}
+                    className="text-dark"
+                  >
+                    <p className="text-start text-decoration-none m-0 p-0">
+                        {/* {item.lihat} */}
+                        Detail
+                    </p>
+                  </Link>
+                  {/* <a href="/detailbuku" className="p-0 m-0 fw-semibold">
                     Detail
-                  </a>
+                  </a> */}
                   </button>
                 </div>
               </div>
             ))}
           </div>
         </div>
-      </div>
+      {/* </div> */}
     </div>
   );
 }

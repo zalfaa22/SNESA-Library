@@ -1,6 +1,6 @@
 @media (max-width: 1440px) {
   .content {
-    .daftarBuku {
+    &.daftarBuku {
       color: #141e46;
       a {
         color: #141e46;
@@ -8,21 +8,24 @@
       }
       .navbar {
         .navbar-kiri {
+
+          .dropdown, 
+          .filter-drop {
+            font-size: 12px;
+          }
           .search-container {
-            /* width: fit-content; */
             border: 1px solid #41b06e;
             border-radius: 10px;
             img {
-              width: 20px;
+              width: 15px;
             }
 
             input {
               width: 170px;
               max-width: 170px;
-              /* width: fit-content; */
               &::placeholder {
                 color: #141e46;
-                /* width: fit-content; */
+                font-size: 13px;
               }
               &:hover {
                 outline: none;
@@ -30,22 +33,22 @@
               }
             }
           }
-          .filter-container {
-            width: fit-content;
+
+          .dropdown {
             border: 1px solid #41b06e;
+            padding: 0;
             border-radius: 10px;
+            width: 120px;
+              max-width: 120px;
+              color: #141e46;
             img {
               width: 20px;
             }
 
-            input {
-              /* width: fit-content; */
-              width: 40px;
-              max-width: 40px;
-              &::placeholder {
-                color: #141e46;
+            a {
                 width: fit-content;
-              }
+                font-size: 13px;
+                border: none;
             }
           }
         }
@@ -57,45 +60,49 @@
             border-radius: 10px;
             background: #41b06e;
             color: white;
+            font-size: 13px;
             img {
               width: 20px;
             }
-
-            
           }
         }
       }
 
       .content-container {
         .card-container {
-            background: #8DECB4;
-            border-radius: 15px;
-            width: 205px;
-            max-width: 205px;
-            height: 400px;
+          background: #8decb4;
+          border-radius: 15px;
+          width: 205px;
+          max-width: 205px;
+          height: 400px;
 
-            .desc-container {
-                h3 {
-                    font-size: 16px;
-                }
-                .desc {
-                    svg {
-                        width: 13px;
-                    }
-                    font-size: 12px;
-                }
+          .desc-container {
+            h3 {
+              font-size: 16px;
+              overflow: hidden !important;
+              text-overflow: ellipsis !important;
+              display: -webkit-box !important;
+              -webkit-line-clamp: 1 !important;
+              -webkit-box-orient: vertical !important;
             }
+            .desc {
+              svg {
+                width: 13px;
+              }
+              font-size: 12px;
+            }
+          }
 
-            .card-bottom {
-                margin-top: auto;
-                display: flex;
-  justify-content: flex-end;
-                button {
-                    border: 2px solid #141E46;
-                    border-radius: 7px;
-                    font-size: 12px;
-                }
+          .card-bottom {
+            margin-top: auto;
+            display: flex;
+            justify-content: flex-end;
+            button {
+              border: 2px solid #141e46;
+              border-radius: 7px;
+              font-size: 12px;
             }
+          }
         }
       }
     }

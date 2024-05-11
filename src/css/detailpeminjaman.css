@@ -1,0 +1,46 @@
+@media (max-width: 1440px) {
+  .detail-peminjaman {
+    .top {
+      .bulat {
+        width: 10px;
+        height: 10px;
+        background: #fd0000; /*Overdue*/
+        /* background: #00FD29; Returned */
+        /* background: #FD9800; Due day */
+        /* background: #FDE400; Days left */
+        border-radius: 50px;
+      }
+    }
+
+    .ket {
+      .card-ket {
+        background: #41b06e;
+        border-radius: 10px;
+
+        .nama {
+          font-size: 14px;
+        }
+
+        .isi {
+          font-size: 12px;
+        }
+      }
+    }
+
+    .deskripsi {
+      .form {
+        .event {
+          border: 1px solid #41b06e;
+          border-radius: 8px;
+          font-size: 13px;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+}
+
+@media (max-width: 325px) {
+}
