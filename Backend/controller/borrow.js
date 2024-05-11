@@ -20,6 +20,21 @@ exports.getAll = async (request, response) => {
 })
 }
 
+exports.findBorrow = async (request, response) => {
+    let code = request.body.code
+    let borrows = await modelBorrow.findAll({
+        where: {
+            code: code ,
+            
+        }
+    })
+    return response.json({
+        success: true,
+        data: borrows,
+        message: `Borrow have been loaded`
+    })
+}
+
 exports.addBorrow = async(request, response)=>{
     let date_of_return = new Date(Date.now());
     date_of_return.setDate(date_of_return.getDate() + 7);

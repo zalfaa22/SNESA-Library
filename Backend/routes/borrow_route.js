@@ -5,6 +5,7 @@ const borrowController = require(`../controller/borrow`)
 const auth = require('../auth/auth')
 
 app.get("/getAll", auth.authVerify, borrowController.getAll)
+app.post("/find", auth.authVerify, borrowController.findBorrow)
 app.post("/add", auth.authVerify, borrowController.addBorrow)
 app.put("/update/:id", auth.authVerify, borrowController.updateBorrow)
 
