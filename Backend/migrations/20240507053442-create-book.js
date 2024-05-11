@@ -18,6 +18,12 @@ module.exports = {
       author: {
         type: Sequelize.STRING
       },
+      penerbit: {
+        type: Sequelize.STRING
+      },
+      tahun_terbit: {
+        type: Sequelize.STRING
+      },
       category: {
         type: Sequelize.STRING
       },
