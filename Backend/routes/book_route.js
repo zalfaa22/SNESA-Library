@@ -3,7 +3,7 @@ const app = express()
 app.use(express.json())
 const bookController = require(`../controller/book`)
 const auth = require('../auth/auth')
-const upload = require(`../controller/foto`)
+// const upload = require(`../controller/foto`)
 
 app.get("/getAll", auth.authVerify, bookController.getAll)
 app.post("/add", auth.authVerify, bookController.addBook)

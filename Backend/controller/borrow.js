@@ -1,6 +1,25 @@
 const { request, response } = require("express")
 const modelBorrow = require("../models/index").borrow 
 
+exports.getAll = async (request, response) => {
+    let borrows = await modelBorrow.findAll({
+        order : [['createdAt', 'DESC']],
+    })
+    
+    if (borrows.length === 0) {
+        return response.json({
+          success: true,
+          data: [],
+          message: `Data not found`,
+        });
+      }
+    return response.json({
+    success: true,
+    data: borrows,
+    message: `this is all the data`
+})
+}
+
 exports.addBorrow = async(request, response)=>{
     let date_of_return = new Date(Date.now());
     date_of_return.setDate(date_of_return.getDate() + 7);
