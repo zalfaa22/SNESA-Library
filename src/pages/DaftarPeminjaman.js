@@ -29,16 +29,27 @@ export default function Peminjaman() {
       console.log("Search Query:", searchQuery);
     };
   
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      window.alert("Token not found!");
+      window.location = "/";
+    }
+    
+    const headerConfig = {
+      headers: { Authorization: `Bearer ${token}` },
+  };
+  
   
 
-    const filteredBuku = daftarBuku
-      .filter((buku) => {
-        if (searchQuery.trim() === "") {
-          return true;
-        } else {
-          return buku.isbn.toLowerCase().includes(searchQuery.toLowerCase());
-        }
-      });
+    // const filteredBuku = daftarBuku
+    //   .filter((buku) => {
+    //     if (searchQuery.trim() === "") {
+    //       return true;
+    //     } else {
+    //       return buku.isbn.toLowerCase().includes(searchQuery.toLowerCase());
+    //     }
+    //   });
 
     return (
       <div className="content" >
@@ -97,7 +108,7 @@ export default function Peminjaman() {
                   </tr>
                 </thead>
                 <tbody className="">
-                    {filteredBuku.map((buku, index) => (
+                    {/* {filteredBuku.map((buku, index) => (
                     <>
                   <tr className="">
                     <td className="fw-semibold" style={{ verticalAlign: 'middle' }}>Alexander Wolfe</td>
@@ -120,7 +131,6 @@ export default function Peminjaman() {
                     className="text-dark"
                   >
                     <p className="text-start text-decoration-none m-0 p-0">
-                        {/* {item.lihat} */}
                         detail
                     </p>
                   </Link>
@@ -128,7 +138,7 @@ export default function Peminjaman() {
                     </td>
                   </tr>
                     </>
-                     ))}
+                     ))} */}
                   <tr>
                     <td className="fw-semibold" style={{ verticalAlign: 'middle' }}>Steve Rogers</td>
                     <td className="fw-semibold" style={{ verticalAlign: 'middle' }}>Not Here to be Liked</td>

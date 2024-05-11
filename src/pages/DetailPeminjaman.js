@@ -6,7 +6,7 @@ import "../css/detailpeminjaman.css";
 export default function DetailPeminjaman() {
   const { id } = useParams();
   const bukuId = id;
-  const buku = daftarBuku.find((item) => item.id === bukuId);
+  // const buku = daftarBuku.find((item) => item.id === bukuId);
   return (
     <>
       <div className="content detail-peminjaman">
