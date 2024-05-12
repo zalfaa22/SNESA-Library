@@ -70,23 +70,28 @@ export default function EditBook() {
       };
       
 
-    const handleSubmit = async () => {
+      const handleSubmit = async () => {
         try {
           const token = localStorage.getItem('token');
           const headerConfig = {
             headers: { Authorization: `Bearer ${token}` },
           };
           const url = `http://localhost:8080/book/update/${id}`;
-          const response = await axios.put(url, book, headerConfig);
-          console.log(response.data);
-          window.alert("Success to Edit book");
-          window.location.href = `/detailbuku/${id}`;
-          // Handle kesuksesan, misalnya redirect atau tampilkan pesan sukses
+      
+          // Tampilkan pesan konfirmasi
+          const isConfirmed = window.confirm("Apakah Anda yakin ingin menyimpan perubahan pada buku ini?");
+      
+          if (isConfirmed) {
+            const response = await axios.put(url, book, headerConfig);
+            console.log(response.data);
+            // window.alert("Success to Edit book");
+            window.location.href = `/detailbuku/${id}`;
+          }
         } catch (error) {
-          // Handle kesalahan, tampilkan pesan kesalahan
           console.error('Error updating book:', error);
         }
       };
+      
 
     return (
       <div className="content addbook">
