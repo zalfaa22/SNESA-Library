@@ -105,64 +105,73 @@ export default function DaftarBuku() {
 
             {/* Dropdown Kategori */}
             <div className="dropdown m-0 p-0 d-flex align-items-center">
-              <a
-                className="btn dropdown-toggle fw-semibold gap-2 d-flex align-items-center"
-                href="#"
-                role="button"
-                onClick={() => handleCategoryBukuClick("")}
-              >
-                <img src="./assets/daftarbuku/Sort.svg" alt="Sort Icon" />
-                {` ${selectedCategory}`}
-              </a>
-              <ul className="dropdown-menu m-0 p-0">
-                <li>
-                  <a
-                    className="dropdown-item m-0"
-                    href="#"
-                    onClick={() => handleCategoryBukuClick("")}
-                  >
-                    Semua
-                  </a>
-                </li>
-                <li>
-                  <a
-                    className="dropdown-item"
-                    href="#"
-                    onClick={() => handleCategoryBukuClick("Referensi")}
-                  >
-                    Referensi
-                  </a>
-                </li>
-                <li>
-                  <a
-                    className="dropdown-item"
-                    href="#"
-                    onClick={() => handleCategoryBukuClick("Novel")}
-                  >
-                    Novel
-                  </a>
-                </li>
-                <li>
-                  <a
-                    className="dropdown-item"
-                    href="#"
-                    onClick={() => handleCategoryBukuClick("Ensiklopedia")}
-                  >
-                    Ensiklopedia
-                  </a>
-                </li>
-                <li>
-                  <a
-                    className="dropdown-item"
-                    href="#"
-                    onClick={() => handleCategoryBukuClick("Komik")}
-                  >
-                    Komik
-                  </a>
-                </li>
-              </ul>
+                <a
+                  className="btn dropdown-toggle fw-semibold gap-2 d-flex align-items-center"
+                  type="button"
+                  id="dropdownMenuButton1"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                  role="button"
+                  placeholder=""
+                >
+                  <img src="./assets/daftarbuku/Sort.svg" alt="" />
+                  {/* <p className="filter-drop fw-semibold m-0 p-0"> */}
+                    {` ${selectedCategory}`}
+                  {/* </p> */}
+                  {/* {` ${selectedCategory}` className="fw-semibold"} Tampilkan kategori terpilih di dalam button */}
+                </a>
+                <ul
+                  className="dropdown-menu m-0 p-0"
+                  aria-labelledby="dropdownMenuButton1"
+                >
+                  <li>
+                    <a
+                      className="dropdown-item m-0"
+                      href="#"
+                      onClick={() => handleCategoryBukuClick("Semua")}
+                    >
+                      Semua
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      className="dropdown-item"
+                      href="#"
+                      onClick={() => handleCategoryBukuClick("Referensi")}
+                    >
+                      Referensi
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      className="dropdown-item"
+                      href="#"
+                      onClick={() => handleCategoryBukuClick("Novel")}
+                    >
+                      Novel
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      className="dropdown-item"
+                      href="#"
+                      onClick={() => handleCategoryBukuClick("Ensiklopedia")}
+                    >
+                      Ensiklopedia
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      className="dropdown-item"
+                      href="#"
+                      onClick={() => handleCategoryBukuClick("Komik")}
+                    >
+                      Komik
+                    </a>
+                  </li>
+                </ul>
+              </div>
             </div>
-          </div>
 
           {/* Tombol Tambah Buku */}
           <div className="navbar-kanan">
