@@ -3,10 +3,11 @@ import Button from "react-bootstrap/Button";
 import Dropdown from "react-bootstrap/Dropdown";
 import "../css/daftarpeminjaman.css";
 import { daftarBuku } from "./DaftarBuku";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import axios from 'axios';
 
 export default function Peminjaman() {
+  const { id } = useParams();
   const [daftarBorrow, setDaftarBorrow] = useState([]);
   const [filteredBuku, setFilteredBuku] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("");
@@ -82,6 +83,29 @@ export default function Peminjaman() {
     // Tambahkan logika pencarian jika diperlukan
   };
 
+  const handleReturn = async (borrowId) => {
+    try {
+      const token = localStorage.getItem("token");
+      const headerConfig = {
+        headers: { Authorization: `Bearer ${token}` },
+      };
+  
+      // Tampilkan pesan konfirmasi
+      const isConfirmed = window.confirm("Apakah Anda yakin ingin mengubah status peminjaman ini?");
+  
+      if (isConfirmed) {
+        const url = `http://localhost:8080/borrow/update/${borrowId}`;
+        await axios.put(url, { status: "dikembalikan" }, headerConfig);
+  
+        // Refresh data setelah berhasil mengubah status
+        fetchData();
+      }
+    } catch (error) {
+      console.error("Error updating borrow:", error);
+    }
+  };
+  
+
     return (
       <div className="content" >
         <div className="px-3 px-md-5 py-4">
@@ -127,7 +151,9 @@ export default function Peminjaman() {
                     <th className="text-white fw-semibold" scope="col">Absen</th>
                     <th className="text-white fw-semibold" scope="col">Date of Borrow</th>
                     <th className="text-white fw-semibold" scope="col">Date of Return</th>
+                    <th className="text-white fw-semibold" scope="col">Return Date</th>
                     <th className="text-white fw-semibold" scope="col">Status</th>
+                    <th className="text-white fw-semibold" scope="col">Aksi</th>
                     <th scope="col"></th>
                   </tr>
                 </thead>
@@ -141,11 +167,15 @@ export default function Peminjaman() {
                   <td>{borrow.absen}</td>
                   <td>{borrow.date_of_borrow}</td>
                   <td>{borrow.date_of_return}</td>
+                  <td>{borrow.return_date}</td>
                   <td>
                     <div className="d-flex align-items-center gap-2">
                       <div className="bulat" style={{ backgroundColor: getStatusColor(borrow.status) }}></div>
                       <p className="m-0">{borrow.status}</p>
                     </div>
+                  </td>
+                  <td>
+                    <button onClick={() => handleReturn(borrow.id)}>✔️</button>
                   </td>
                   <td>
                     {/* Tambahkan tombol detail atau link ke halaman detail */}
