@@ -107,7 +107,7 @@ export default function DetailPeminjaman() {
               </div>
             </div>
             <div className="deskripsi row m-0 gap-4">
-              <div className="col-5  p-0">
+              <div className="col-8 ">
                 <div className="form mb-3 w-100">
                   <p className="mb-1 fw-semibold">Judul buku</p>
                   <div className="d-flex event px-2 py-2">
@@ -129,7 +129,7 @@ export default function DetailPeminjaman() {
                   </div>
                 </div>
               </div>
-              <div className="col-5">
+              <div className="col-8">
                 <div className="form mb-3">
                   <p className="mb-1 fw-semibold">Nama peminjam</p>
                   <div className="d-flex event px-2 py-2">

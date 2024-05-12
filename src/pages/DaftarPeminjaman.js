@@ -115,7 +115,9 @@ export default function Peminjaman() {
       />
     </form>
             </div>
-            <div className="table-pinjam">
+
+          
+            <div className="table-pinjam overflow-x-auto">
               <table class="table custom-table bg-transparent">
                 <thead className="table-color ">
                   <tr>
