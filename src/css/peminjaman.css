@@ -22,27 +22,33 @@
           border: 1px solid #41b06e;
           border-radius: 8px;
           font-size: 13px;
+
+          .form-control1 {
+            border: 0;
+
+            &:focus {
+              outline: none;
+              border: 0;
+            }
+          }
         }
       }
     }
-
-   
   }
   .modal-body {
     img {
-        width: 100px;
+      width: 100px;
     }
 
     button {
-        background: #33C481;
-        border: 0;
-        /* border-radius: ; */
-        border-radius: inherit;
-        box-shadow: 0 0.75em 0 0 blue;
-        transform: translate3d(0, 0.75em, -1em);
-        
+      background: #33c481;
+      border: 0;
+      /* border-radius: ; */
+      border-radius: inherit;
+      box-shadow: 0 0.75em 0 0 blue;
+      transform: translate3d(0, 0.75em, -1em);
     }
-        }
+  }
 }
 
 @media (max-width: 768px) {
