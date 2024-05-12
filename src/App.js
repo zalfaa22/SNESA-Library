@@ -34,7 +34,7 @@ function App() {
           <Route path="/akun" element={<Akun/>} />
           <Route path="/detailbuku/:id" element={<DetailBuku/>} />
           <Route path="/tambahbuku" element={<AddBook/>} />
-          <Route path="/editbuku" element={<EditBook/>} />
+          <Route path="/editbuku/:id" element={<EditBook/>} />
         </Routes>
       </div>
     </>

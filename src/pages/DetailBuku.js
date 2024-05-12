@@ -70,9 +70,9 @@ export default function DetailBuku() {
             </a>
             <div className="detail-container d-flex gap-4 m-0 bg-white px-4 py-4 w-100">
               <img
-                src={book.pict}
+                src={"http://localhost:8080/foto/" +  book.pict}
                 alt=""
-                className="img-fluid col object-fit-cover"
+                className="img-fluid col-5 object-fit-cover"
               />
               <div className="desc-book col-12 col-md-6">
                 <h3 className="mb-4 fw-semibold">{book.title}</h3>
@@ -99,7 +99,7 @@ export default function DetailBuku() {
                 </div>
 
                 <div className="action row mx-0 mb-3 mt-5 gap-2 ">
-                  <button className="edit-book col-6 px-1 py-2 d-flex gap-1 align-items-center justify-content-center">
+                  <button className="edit-book col-6 px-1 py-2 d-flex gap-1 align-items-center justify-content-center" onClick={() => window.location = `/editbuku/${book.id}`}>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="16"

@@ -6,6 +6,7 @@ const auth = require('../auth/auth')
 // const upload = require(`../controller/foto`)
 
 app.get("/getAll", auth.authVerify, bookController.getAll)
+app.get("/:id", auth.authVerify, bookController.getBookById);
 app.post("/add", auth.authVerify, bookController.addBook)
 app.post("/find", auth.authVerify, bookController.findBook)
 app.put("/update/:id", auth.authVerify, bookController.updateBook )

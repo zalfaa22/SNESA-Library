@@ -7,6 +7,8 @@ export default function AddBook() {
     code: "",
     title: "",
     author: "",
+    penerbit: "",
+    tahun_terbit: "",
     category: "",
     pict: "",
   });
@@ -29,12 +31,12 @@ export default function AddBook() {
     });
   };
 
-  const handleFileChange = (e) => {
-    setState({
-      ...state,
-      pict: e.target.files[0]  // Save the file object
-    });
-  };
+  // const handleFileChange = (e) => {
+  //   setState({
+  //     ...state,
+  //     pict: e.target.files[0]  // Save the file object
+  //   });
+  // };
 
   // const handleAdd = () => {
   //   setState({
@@ -55,6 +57,8 @@ export default function AddBook() {
       data.append("code", state.code);
       data.append("title", state.title);
       data.append("author", state.author);
+      data.append("penerbit", state.penerbit);
+      data.append("tahun_terbit", state.tahun_terbit);
       data.append("category", state.category);
       data.append("pict", state.pict);
     
@@ -76,17 +80,34 @@ export default function AddBook() {
 
   const [selectedImage, setSelectedImage] = useState(null);
 
-  const handleFileUpload = (files) => {
-    const reader = new FileReader();
-    reader.onload = function (e) {
-      setSelectedImage(e.target.result);
-      setState({
-        ...state,
-        pict: e.target.result // Update foto state with base64 encoded image
-      });
-    };
-    reader.readAsDataURL(files[0]);
+const handleFileChange = (e) => {
+  const file = e.target.files[0];
+  const reader = new FileReader();
+  reader.onload = function (event) {
+    const imageUrl = event.target.result;
+    setSelectedImage(imageUrl); // Set selected image state
+    setState({
+      ...state,
+      pict: file, // Save the file object
+    });
   };
+  reader.readAsDataURL(file);
+};
+
+
+  // const [selectedImage, setSelectedImage] = useState(null);
+
+  // const handleFileUpload = (files) => {
+  //   const reader = new FileReader();
+  //   reader.onload = function (e) {
+  //     setSelectedImage(e.target.result);
+  //     setState({
+  //       ...state,
+  //       pict: e.target.result // Update foto state with base64 encoded image
+  //     });
+  //   };
+  //   reader.readAsDataURL(files[0]);
+  // };
 
   return (
     <div className="content addbook">
@@ -184,11 +205,15 @@ export default function AddBook() {
               </div>
             </div>
 
-            {/* <div className="form">
+            <div className="form">
               <p>Penerbit</p>
               <div className="d-flex event">
                 <input
                   type="text"
+                  id="penerbit"
+                  name="penerbit"
+                  value={state.penerbit}
+                  onChange={handleChange}
                   className="form-control1"
                   placeholder="Penerbit buku ..."
                 />
@@ -200,11 +225,15 @@ export default function AddBook() {
               <div className="d-flex event">
                 <input
                   type="text"
+                  id="tahun_terbit"
+                  name="tahun_terbit"
+                  value={state.tahun_terbit}
+                  onChange={handleChange}
                   className="form-control1"
                   placeholder="Tahun terbit buku ..."
                 />
               </div>
-            </div> */}
+            </div>
 
             <div className="form">
               <p>Jenis Buku</p>
@@ -215,11 +244,11 @@ export default function AddBook() {
                   value={state.category}
                   onChange={handleChange}
                 >
-                  <option selected>Pilih jenis buku ...</option>
-                  <option value="Ensiklopedia">Ensiklopedia</option>
-                  <option value="Referensi">Referensi</option>
-                  <option value="Novel">Novel</option>
-                  <option value="Komik">Komik</option>
+                  <option selected disabled hidden>Pilih jenis buku ...</option>
+                  <option value="ensiklopedia">Ensiklopedia</option>
+                  <option value="referensi">Referensi</option>
+                  <option value="novel">Novel</option>
+                  <option value="komik">Komik</option>
                 </select>
               </div>
             </div>
