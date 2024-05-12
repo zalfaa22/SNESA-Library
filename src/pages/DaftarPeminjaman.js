@@ -1,55 +1,86 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import Dropdown from "react-bootstrap/Dropdown";
 import "../css/daftarpeminjaman.css";
 import { daftarBuku } from "./DaftarBuku";
 import { Link, useLocation } from "react-router-dom";
+import axios from 'axios';
 
 export default function Peminjaman() {
-  const [categoryBuku, setCategoryBuku] = useState("");
+  const [daftarBorrow, setDaftarBorrow] = useState([]);
+  const [filteredBuku, setFilteredBuku] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
-  const [searchMode, setSearchMode] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState("Semua");
 
-  const handleCategoryBukuClick = (category) => {
-    setCategoryBuku(category);
-    setSelectedCategory(category === "" ? "Semua" : category);
-  }
+  useEffect(() => {
+    fetchData();
+  }, [selectedCategory]);
+  useEffect(() => {
+    fetchData();
+  }, [searchQuery]);
 
-    const handleSearchClick = () => {
-      setSearchMode(true);
-    };
-
-    const handleSearchChange = (event) => {
-      setSearchQuery(event.target.value);
-    };
-
-    const handleSearchSubmit = (event) => {
-      event.preventDefault();
-      console.log("Search Query:", searchQuery);
-    };
+  const fetchData = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        window.alert('Token not found!');
+        window.location = '/';
+        return;
+      }
   
-    const token = localStorage.getItem("token");
+      const headerConfig = {
+        headers: { Authorization: `Bearer ${token}` },
+      };
+  
+      const url = 'http://localhost:8080/borrow/getAll';
+      const response = await axios.get(url, headerConfig);
+      const borrow = response.data.data;
+  
+      // Simpan data buku ke dalam state daftarBorrow
+      setDaftarBorrow(borrow);
 
-    if (!token) {
-      window.alert("Token not found!");
-      window.location = "/";
+      // Filter data buku berdasarkan kategori dan pencarian
+      let filteredBorrow = [...borrow]; // Copy semua buku
+  
+     
+  
+      if (searchQuery.trim() !== '') {
+        filteredBorrow = filteredBorrow.filter((borrow) => {
+          return borrow.code.toLowerCase().includes(searchQuery.toLowerCase());
+        });
+      }
+  
+      // Simpan data buku yang sudah difilter ke dalam state filteredBuku
+      setFilteredBuku(filteredBorrow);
+    } catch (error) {
+      console.error('Error fetching book list:', error);
+      // Tambahkan penanganan error di sini jika diperlukan
     }
-    
-    const headerConfig = {
-      headers: { Authorization: `Bearer ${token}` },
   };
-  
-  
 
-    // const filteredBuku = daftarBuku
-    //   .filter((buku) => {
-    //     if (searchQuery.trim() === "") {
-    //       return true;
-    //     } else {
-    //       return buku.isbn.toLowerCase().includes(searchQuery.toLowerCase());
-    //     }
-    //   });
+  const getStatusColor = (status) => {
+    if (status.toLowerCase() === 'dipinjam') {
+      return 'yellow'; // Warna kuning untuk status 'dipinjam'
+    } else if (status.toLowerCase() === 'dikembalikan') {
+      return 'green'; // Warna merah untuk status 'telat'
+    } else {
+      return 'black'; // Warna default jika status tidak cocok dengan kondisi di atas
+    }
+  };
+
+  const handleSearchClick = () => {
+    // Tambahkan logika jika diperlukan
+  };
+
+  const handleSearchChange = (event) => {
+    setSearchQuery(event.target.value);
+  };
+
+  const handleSearchSubmit = (event) => {
+    event.preventDefault();
+    console.log("Search Query:", searchQuery);
+    // Tambahkan logika pencarian jika diperlukan
+  };
 
     return (
       <div className="content" >
@@ -65,101 +96,75 @@ export default function Peminjaman() {
 
           {/* CONTENT */}
           <div className="">
-            <div className="navbar row mb-4 mx-0">
-              <div
-                // variant="outline-success-none"
-                className="search-container col-4 bg-transparent d-flex px-3 py-2 gap-2 align-items-center"
-                onClick={handleSearchClick}
-              >
-                <img
-                  src="./assets/daftarbuku/Search.svg"
-                  className="img-fluid"
-                  alt=""
-                />
-                <form
-                  onSubmit={handleSearchSubmit}
-                  className="m-0 p-0">
-                  <input
-                    type="text"
-                    className="m-0 p-0 fw-semibold bg-transparent border-0"
-                    placeholder="Cari berdasarkan kode"
-                    value={searchQuery}
-                    onChange={handleSearchChange}
-                  />
-                </form>
-                {/* <input
-                    type="text"
-                    className="m-0 p-0 fw-semibold bg-transparent border-0"
-                    placeholder="Cari berdasarkan kode"
-                  /> */}
-              </div>
+          <div
+              className="search-container mb-3 bg-transparent d-flex px-3 py-2 gap-2 align-items-center"
+              onClick={handleSearchClick}
+            >
+              <img
+                src="./assets/daftarbuku/Search.svg"
+                className="img-fluid"
+                alt="Search Icon"
+              />
+                <form onSubmit={handleSearchSubmit} className="m-0 p-0">
+      <input
+        type="text"
+        className="m-0 p-0 fw-semibold bg-transparent border-0"
+        placeholder="Cari berdasarkan kode"
+        value={searchQuery}
+        onChange={handleSearchChange}
+      />
+    </form>
             </div>
-
             <div className="table-pinjam">
               <table class="table custom-table bg-transparent">
                 <thead className="table-color ">
                   <tr>
-                    <th className="text-white fw-semibold" scope="col">Nama</th>
-                    <th className="text-white fw-semibold" scope="col">Judul Buku</th>
-                    <th className="text-white fw-semibold" scope="col">ISBN</th>
-                    <th className="text-white fw-semibold" scope="col">Tgl Peminjaman</th>
+                    <th className="text-white fw-semibold" scope="col">Code</th>
+                    <th className="text-white fw-semibold" scope="col">Student Name</th>
+                    <th className="text-white fw-semibold" scope="col">Class</th>
+                    <th className="text-white fw-semibold" scope="col">Absen</th>
+                    <th className="text-white fw-semibold" scope="col">Date of Borrow</th>
+                    <th className="text-white fw-semibold" scope="col">Date of Return</th>
                     <th className="text-white fw-semibold" scope="col">Status</th>
                     <th scope="col"></th>
                   </tr>
                 </thead>
-                <tbody className="">
-                    {/* {filteredBuku.map((buku, index) => (
-                    <>
-                  <tr className="">
-                    <td className="fw-semibold" style={{ verticalAlign: 'middle' }}>Alexander Wolfe</td>
-                    <td className="fw-semibold" style={{ verticalAlign: 'middle' }}>Not Here to be Liked</td>
-                    <td className="fw-semibold" style={{ verticalAlign: 'middle' }}>123</td>
-                    <td className="fw-semibold" style={{ verticalAlign: 'middle' }}>28, Nov 2023</td>
-                    <td className="" style={{ verticalAlign: 'middle' }}>
-                      <div className="d-flex align-items-center gap-2">
-                      <div className="bulat"></div>
-                        <p className="m-0">overdue, 2 days</p>
-                        </div>
-                    </td>
-                    <td className="" style={{ verticalAlign: 'middle' }}>
-                            <button className="px-2 py-1 fw-semibold">
-                            <Link
+                <tbody>
+              {/* Mapping data dari daftarBorrow ke dalam baris tabel */}
+              {filteredBuku.map((borrow, index) => (
+                <tr key={index}>
+                  <td>{borrow.code}</td>
+                  <td>{borrow.student_name}</td>
+                  <td>{borrow.class}</td>
+                  <td>{borrow.absen}</td>
+                  <td>{borrow.date_of_borrow}</td>
+                  <td>{borrow.date_of_return}</td>
+                  <td>
+                    <div className="d-flex align-items-center gap-2">
+                      <div className="bulat" style={{ backgroundColor: getStatusColor(borrow.status) }}></div>
+                      <p className="m-0">{borrow.status}</p>
+                    </div>
+                  </td>
+                  <td>
+                    {/* Tambahkan tombol detail atau link ke halaman detail */}
+                    {/* <button className="px-2 py-1 fw-semibold">
+                      Detail
+                    </button> */}
+                    <Link
                     to={{
-                      pathname: `/detailpeminjaman/${buku.id}`,
-                      state: { selecteditem: buku },
+                      pathname: `/detailpeminjaman/${borrow.id}`,
+                      state: { selecteditem: borrow },
                     }}
                     className="text-dark"
                   >
-                    <p className="text-start text-decoration-none m-0 p-0">
-                        detail
-                    </p>
-                  </Link>
-                      </button>
-                    </td>
-                  </tr>
-                    </>
-                     ))} */}
-                  <tr>
-                    <td className="fw-semibold" style={{ verticalAlign: 'middle' }}>Steve Rogers</td>
-                    <td className="fw-semibold" style={{ verticalAlign: 'middle' }}>Not Here to be Liked</td>
-                    <td className="fw-semibold" style={{ verticalAlign: 'middle' }}>4</td>
-                    <td className="fw-semibold" style={{ verticalAlign: 'middle' }}>28, Nov 2023</td>
-                    <td className="" style={{ verticalAlign: 'middle' }}>3 minutes left</td>
-                    <td className="" style={{ verticalAlign: 'middle' }}>
-                      <button className="px-2 py-1 fw-semibold">detail</button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className="" style={{ verticalAlign: 'middle' }}>Jeongwoo</td>
-                    <td className="" style={{ verticalAlign: 'middle' }}>Not Here to be Liked</td>
-                    <td className="" style={{ verticalAlign: 'middle' }}>123</td>
-                    <td className="" style={{ verticalAlign: 'middle' }}>28, Nov 2023</td>
-                    <td className="" style={{ verticalAlign: 'middle' }}>Returned</td>
-                    <td className="" style={{ verticalAlign: 'middle' }}>
-                      <button className="px-2 py-1">detail</button>
-                    </td>
-                  </tr>
-                </tbody>
+                <button className="detail py-1 px-3">
+                    <p className="text-start text-decoration-none m-0 p-0">Detail</p>
+                </button>
+                </Link>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
               </table>
             </div>
           </div>

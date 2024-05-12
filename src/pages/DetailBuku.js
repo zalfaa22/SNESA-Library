@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import axios from "axios";
 import "../css/detailbuku.css";
-import { Link } from "react-router-dom";
+// import { } from "react-router-dom";
 
 export default function DetailBuku() {
   const { id } = useParams();
@@ -88,12 +88,12 @@ export default function DetailBuku() {
                 </div>
                 <div className="sub-desc d-flex justify-content-between py-3">
                   <p className="nama-kolom p-0 m-0 fw-bold">Penerbit</p>
-                  <p className="isi p-0 m-0 fw-normal">Mizan</p>
+                  <p className="isi p-0 m-0 fw-normal">{book.penerbit}</p>
                 </div>
 
                 <div className="sub-desc d-flex justify-content-between py-3">
                   <p className="nama-kolom p-0 m-0 fw-bold">Tahun Terbit</p>
-                  <p className="isi p-0 m-0 fw-normal">2025</p>
+                  <p className="isi p-0 m-0 fw-normal">{book.tahun_terbit}</p>
                 </div>
                 <div className="sub-desc d-flex justify-content-between py-3">
                   <p className="nama-kolom p-0 m-0 fw-bold">Jenis Buku</p>

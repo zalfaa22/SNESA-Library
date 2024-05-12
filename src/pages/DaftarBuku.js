@@ -9,46 +9,52 @@ export default function DaftarBuku() {
   const [filteredBuku, setFilteredBuku] = useState([]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const token = localStorage.getItem('token');
-        if (!token) {
-          window.alert('Token not found!');
-          window.location = '/';
-          return;
-        }
-
-        const headerConfig = {
-          headers: { Authorization: `Bearer ${token}` },
-        };
-
-        const url = 'http://localhost:8080/book/getAll';
-        const response = await axios.get(url, headerConfig);
-        const books = response.data.data;
-
-        const filteredBooks = books.filter((buku) => {
-          if (selectedCategory === '' || selectedCategory.toLowerCase() === 'semua') {
-            return true;
-          } else {
-            return buku.category.toLowerCase() === selectedCategory.toLowerCase();
-          }
-        }).filter((buku) => {
-          if (searchQuery.trim() === '') {
-            return true;
-          } else {
-            return buku.isbn.toLowerCase().includes(searchQuery.toLowerCase());
-          }
-        });
-
-        setFilteredBuku(filteredBooks);
-      } catch (error) {
-        console.error('Error fetching book list:', error);
-        // Tambahkan penanganan error di sini jika diperlukan
-      }
-    };
-
     fetchData();
-  }, [selectedCategory, searchQuery]);
+  }, [selectedCategory]);
+  
+  useEffect(() => {
+    fetchData();
+  }, [searchQuery]);
+  
+  const fetchData = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        window.alert('Token not found!');
+        window.location = '/';
+        return;
+      }
+  
+      const headerConfig = {
+        headers: { Authorization: `Bearer ${token}` },
+      };
+  
+      const url = 'http://localhost:8080/book/getAll';
+      const response = await axios.get(url, headerConfig);
+      const books = response.data.data;
+  
+      let filteredBooks = [...books]; // Copy semua buku
+  
+      // Filter berdasarkan kategori jika selectedCategory tidak kosong
+      if (selectedCategory && selectedCategory.toLowerCase() !== 'semua') {
+        filteredBooks = filteredBooks.filter((buku) => {
+          return buku.category.toLowerCase() === selectedCategory.toLowerCase();
+        });
+      }
+  
+      // Filter berdasarkan pencarian (ISBN)
+      if (searchQuery.trim() !== '') {
+        filteredBooks = filteredBooks.filter((buku) => {
+          return buku.code.toLowerCase().includes(searchQuery.toLowerCase());
+        });
+      }
+  
+      setFilteredBuku(filteredBooks);
+    } catch (error) {
+      console.error('Error fetching book list:', error);
+      // Tambahkan penanganan error di sini jika diperlukan
+    }
+  };
 
   const handleCategoryBukuClick = (category) => {
     setSelectedCategory(category);
@@ -68,6 +74,40 @@ export default function DaftarBuku() {
     // Tambahkan logika pencarian jika diperlukan
   };
 
+  const Button = () => {
+    // Mendeteksi apakah layar adalah ponsel (lebar kurang dari 600px)
+    const isMobile = window.innerWidth < 600;
+
+    if (isMobile) {
+      // Jika layar adalah ponsel, hanya tampilkan gambar
+      return (
+        <Link to="/tambahbuku">
+          <button className="add-container d-flex p-2 gap-2 align-items-center">
+          <img
+            src="./assets/daftarbuku/add.svg"
+            className="img-fluid"
+            alt="Add Icon"
+          />
+        </button>
+        </Link>
+      );
+    } else {
+      // Jika bukan ponsel, tampilkan tombol dengan teks "Tambah Buku"
+      return (
+        <Link to="/tambahbuku">
+          <button className="add-container d-flex px-3 py-2 gap-2 align-items-center">
+            <img
+              src="./assets/daftarbuku/add.svg"
+              className="img-fluid"
+              alt="Add Icon"
+            />
+            Tambah Buku
+          </button>
+        </Link>
+      );
+    }
+  };
+
   return (
     <div className="content daftarBuku">
       <div className="px-3 px-md-5 py-4">
@@ -81,8 +121,8 @@ export default function DaftarBuku() {
         </div>
 
         {/* NAVBAR */}
-        <div className="navbar d-flex justify-between mb-4">
-          <div className="navbar-kiri d-flex gap-2">
+        <div className="navbar d-flex flex-wrap justify-between mb-4">
+          <div className="navbar-kiri d-flex gap-2 mb-2">
             <div
               className="search-container bg-transparent d-flex px-3 py-2 gap-2 align-items-center"
               onClick={handleSearchClick}
@@ -176,6 +216,7 @@ export default function DaftarBuku() {
           {/* Tombol Tambah Buku */}
           <div className="navbar-kanan">
             <Link to="/tambahbuku">
+            {/* <Button /> */}
             <button className="add-container d-flex px-3 py-2 gap-2 align-items-center">
               <img
                 src="./assets/daftarbuku/add.svg"
@@ -189,9 +230,9 @@ export default function DaftarBuku() {
         </div>
 
         {/* CARD */}
-        <div className="content-container d-flex flex-wrap gap-4">
+        <div className="content-container row m-0 d-flex flex-wrap gap-4">
           {filteredBuku.map((buku, index) => (
-            <div key={buku.id} className="card-container px-4 py-4">
+            <div key={buku.id} className="card-container col-md-3 col-12 col-lg-4 px-4 py-4">
               <img src={"http://localhost:8080/foto/" +  buku.pict} alt="Book Cover" className="d-flex mx-auto img-fluid" />
               <div className="desc-container mt-3">
                 <h3 className="p-0 m-0 fw-bold mb-2">{buku.title}</h3>

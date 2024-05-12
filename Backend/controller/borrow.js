@@ -115,19 +115,19 @@ exports.updateBorrow = async (request, response) => {
  exports.getBorrowById = async (request, response) => {
     try {
         const id = request.params.id;
-        const book = await modelBook.findByPk(id);
+        const borrow = await modelBorrow.findByPk(id);
         
-        if (!book) {
+        if (!borrow) {
             return response.status(404).json({
                 success: false,
-                message: `Book not found with ID ${id}`
+                message: `Borrow not found with ID ${id}`
             });
         }
         
         return response.json({
             success: true,
-            data: book,
-            message: `Book details retrieved successfully`
+            data: borrow,
+            message: `Borrow details retrieved successfully`
         });
     } catch (error) {
         return response.status(500).json({
