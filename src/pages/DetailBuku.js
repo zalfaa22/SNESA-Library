@@ -36,6 +36,29 @@ export default function DetailBuku() {
     fetchData();
   }, [id]);
 
+  const handleDelete = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const headerConfig = {
+        headers: { Authorization: `Bearer ${token}` },
+      };
+  
+      // Tampilkan pesan konfirmasi
+      const isConfirmed = window.confirm("Apakah Anda yakin ingin menghapus buku ini?");
+  
+      if (isConfirmed) {
+        const url = `http://localhost:8080/book/delete/${id}`;
+        await axios.delete(url, headerConfig);
+        
+        // Redirect ke halaman daftar buku setelah berhasil menghapus
+        window.location.href = "/daftarbuku";
+      }
+    } catch (error) {
+      console.error("Error deleting book:", error);
+    }
+  };
+  
+
   if (!book) {
     return <div>Loading...</div>;
   }
@@ -101,7 +124,7 @@ export default function DetailBuku() {
                 </div>
 
                 <div className="action row mx-0 mb-3 mt-5 gap-2 ">
-                  <button className="edit-book col-6 px-1 py-2 d-flex gap-1 align-items-center justify-content-center">
+                  <button className="edit-book col-6 px-1 py-2 d-flex gap-1 align-items-center justify-content-center"  onClick={() => window.location = `/editbuku/${book.id}`}>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="16"
@@ -114,7 +137,7 @@ export default function DetailBuku() {
                     </svg>
                     <p className="p-0 m-0 fw-semibold">Edit Book</p>
                   </button>
-                  <button className="delete-book col px-1 py-2 d-flex gap-1 align-items-center justify-content-center">
+                  <button className="delete-book col px-1 py-2 d-flex gap-1 align-items-center justify-content-center" onClick={handleDelete}>
                     <i class="bi bi-trash3-fill"></i>
                     <p className="p-0 m-0 fw-semibold">Delete Book</p>
                   </button>
