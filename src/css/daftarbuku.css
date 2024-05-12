@@ -38,8 +38,9 @@
             border: 1px solid #41b06e;
             padding: 0;
             border-radius: 10px;
-            width: 120px;
-              max-width: 120px;
+            width: fit-content;
+            /* width: 120px;
+              max-width: 120px; */
               color: #141e46;
             img {
               width: 20px;
@@ -75,6 +76,10 @@
           width: 205px;
           max-width: 205px;
           height: 400px;
+
+          img {
+            height: 60%;
+          }
 
           .desc-container {
             h3 {

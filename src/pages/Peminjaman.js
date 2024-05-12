@@ -1,9 +1,14 @@
 import React, { useEffect, useState } from "react";
 import "../css/peminjaman.css";
 import Modal from "react-bootstrap/Modal";
+import axios from "axios";
+import { useParams } from "react-router-dom";
 
 export default function Peminjaman() {
   const [showModal, setShowModal] = useState(false);
+  const { id } = useParams();
+  const [book, setBook] = useState(null);
+  const [borrow, setBorrow] = useState(null);
 
   const handleShowModal = () => {
     setShowModal(true);
@@ -13,6 +18,112 @@ export default function Peminjaman() {
     setShowModal(false);
   };
 
+  const [state, setState] = useState({
+    borrow: [],
+    book: [],
+    id: "",
+    code: "",
+    student_name: "",
+    class: "",
+    absen: "",
+    date_of_borrow: "",
+    date_of_return: "",
+    status: "",
+    penalty: "",
+    title: "",
+    author: "",
+    category: "",
+    pict: "",
+    token: "",
+    action: "",
+    keyword: "",
+  });
+  // const [state, setState] = useState({
+  //   code: "",
+  //   student_name: "",
+  //   class: "",
+  //   absen: "",
+  //   date_of_borrow: "",
+  //   date_of_return: "",
+  //   status: "",
+  //   penalty: "",
+  // });
+
+  const token = localStorage.getItem("token");
+
+  if (!token) {
+    window.alert("Token not found!");
+    window.location = "/";
+  }
+
+  const headerConfig = {
+    headers: { Authorization: `Bearer ${token}` },
+  };
+
+  const handleChange = (e) => {
+    setState({
+      ...state,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  // const handleAddPeminjaman = (e) => {
+  //   e.preventDefault();
+
+  //   let data = new FormData();
+  //   data.append("id", state.id);
+  //   data.append("code", state.code);
+  //   data.append("student_name", state.student_name);
+  //   data.append("class", state.class);
+  //   data.append("absen", state.absen);
+  //   data.append("date_of_borrow", state.date_of_borrow);
+  //   data.append("date_of_return", state.date_of_return);
+
+  //   let url = http://localhost:8080/borrow/${id};
+  //   axios
+  //     .post(url, data, headerConfig)
+  //     .then((response) => {
+  //       window.alert("Success to Borrow");
+  //       window.location.href = "/daftarpeminjaman";
+  //     })
+  //     .catch((error) => {
+  //       console.log("error", error.response.status);
+  //       if (error.response.status === 500) {
+  //         window.alert("Failed Borrow");
+  //       }
+  //     });
+  // };
+
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const token = localStorage.getItem('token');
+  //       if (!token) {
+  //         window.alert('Token not found!');
+  //         window.location = '/';
+  //         return;
+  //       }
+
+  //       const headerConfig = {
+  //         headers: { Authorization: Bearer ${token} },
+  //       };
+
+  //       const url = http://localhost:8080/borrow/${id};
+  //       const response = await axios.get(url, headerConfig);
+  //       const borrowData = response.data;
+  //       console.log(borrowData);
+  //       setBorrow(borrowData.data);
+  //     } catch (error) {
+  //       console.error('Error fetching book data:', error);
+  //     }
+  //   };
+
+  //   fetchData();
+  // }, [id]);
+
+  // if (!borrow) {
+  //   return <div>Loading...</div>;
+  // }
   return (
     <>
       <div className="content">
@@ -36,7 +147,11 @@ export default function Peminjaman() {
                   className="img-fluid object-fit-cover"
                 />
               </div>
-              <button className="px-3 py-2" onClick={handleShowModal}>
+              <button
+                className="px-3 py-2"
+                // onClick={handleShowModal}
+                // onClick={handleAddPeminjaman}
+              >
                 Pinjam
               </button>
               <Modal
@@ -46,11 +161,7 @@ export default function Peminjaman() {
                 keyboard={false}
                 centered
               >
-                {/* <Modal.Header closeButton>
-          <Modal.Title>Modal title</Modal.Title>
-        </Modal.Header> */}
                 <Modal.Body>
-                  {/* <div className="d-flex-col"> */}
                   <img
                     src="./assets/daftarBuku/done.svg"
                     alt=""
@@ -66,7 +177,6 @@ export default function Peminjaman() {
                   >
                     Ok
                   </button>
-                  {/* </div> */}
                 </Modal.Body>
               </Modal>
             </div>
@@ -76,93 +186,120 @@ export default function Peminjaman() {
               <div className="form mb-3 w-100">
                 <p className="mb-1 fw-semibold">Judul buku</p>
                 <div className="d-flex event px-2 py-2">
-                  <p className="m-0">aaa</p>
+                  <input
+                    type="text"
+                    id="author"
+                    name="author"
+                    value={state.title}
+                    onChange={handleChange}
+                    className="form-control1"
+                    placeholder="Judul buku ..."
+                  />
                 </div>
               </div>
 
               <div className="form mb-3 w-100">
                 <p className="mb-1 fw-semibold">Penulis buku</p>
                 <div className="d-flex event px-2 py-2">
-                  <p className="m-0">aaa</p>
+                  <input
+                    type="text"
+                    id="author"
+                    name="author"
+                    value={state.author}
+                    onChange={handleChange}
+                    className="form-control1"
+                    placeholder="Penulis buku ..."
+                  />
                 </div>
               </div>
 
               <div className="form mb-3">
                 <p className="mb-1 fw-semibold">ISBN</p>
                 <div className="d-flex event px-2 py-2">
-                  <p className="m-0">aaa</p>
+                  <input
+                    type="text"
+                    id="author"
+                    name="author"
+                    value={state.code}
+                    onChange={handleChange}
+                    className="form-control1"
+                    placeholder="ISBN buku ..."
+                  />
                 </div>
               </div>
-              {/* </div> */}
-              {/* <div className="col-5"> */}
               <div className="form mb-3">
                 <p className="mb-1 fw-semibold">Nama peminjam :</p>
                 <div className="d-flex event px-2 py-2">
-                  <p className="m-0">aaa</p>
+                  <input
+                    type="text"
+                    id="author"
+                    name="author"
+                    value={state.author}
+                    onChange={handleChange}
+                    className="form-control1"
+                    placeholder="Nama Peminjam ..."
+                  />
                 </div>
               </div>
 
               <div className="form mb-3">
                 <p className="mb-1 fw-semibold">Kelas :</p>
                 <div className="d-flex event px-2 py-2">
-                  <p className="m-0">aaa</p>
+                  <input
+                    type="text"
+                    id="author"
+                    name="author"
+                    value={state.class}
+                    onChange={handleChange}
+                    className="form-control1"
+                    placeholder="Kelas ..."
+                  />
                 </div>
               </div>
 
               <div className="form mb-3">
-                <p className="mb-1 fw-semibold">Nohp :</p>
+                <p className="mb-1 fw-semibold">Absen :</p>
                 <div className="d-flex event px-2 py-2">
-                  <p className="m-0">aaa</p>
+                  <input
+                    type="text"
+                    id="author"
+                    name="author"
+                    value={state.absen}
+                    onChange={handleChange}
+                    className="form-control1"
+                    placeholder="Absen Peminjam ..."
+                  />
                 </div>
               </div>
               <div className="form mb-3">
                 <p className="mb-1 fw-semibold">Tanggal peminjaman</p>
                 <div className="d-flex event px-2 py-2">
-                  <p className="m-0">aaa</p>
+                  <input
+                    type="text"
+                    id="author"
+                    name="author"
+                    value={state.date_of_borrow}
+                    onChange={handleChange}
+                    className="form-control1"
+                    placeholder="Tanggal Pinjam ..."
+                  />
                 </div>
               </div>
               <div className="form mb-3">
                 <p className="mb-1 fw-semibold">Tanggal pengembalian</p>
                 <div className="d-flex event px-2 py-2">
-                  <p className="m-0">aaa</p>
+                  <input
+                    type="text"
+                    id="author"
+                    name="author"
+                    value={state.date_of_return}
+                    onChange={handleChange}
+                    className="form-control1"
+                    placeholder="Tanggal Pengembalian ..."
+                  />
                 </div>
               </div>
             </div>
-            {/* </div> */}
-            {/* </div> */}
-            {/* </div> */}
-            {/* <div className="bagian-kanan col-4 m-0 p-0">
-                <div className="ket d-flex gap-2 mb-3">
-                  <div className="total-books bg-white w-100 py-2 px-3">
-                    <p className="fw-semibold m-0 p-0">Total Books</p>
-                    <h4>36</h4>
-                  </div>
-                  <div className="available bg-white w-100 py-2 px-3">
-                    <p className="fw-semibold m-0 p-0">Available</p>
-                    <h4>22</h4>
-                  </div>
-                </div>
-                <div className="action d-flex gap-2 mb-3">
-                  <button className="edit-book px-1 py-2 w-100 d-flex gap-1 align-items-center justify-content-center">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="16"
-                      height="16"
-                      fill="currentColor"
-                      class="bi bi-pencil-fill"
-                      viewBox="0 0 16 16"
-                    >
-                      <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.5.5 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11z" />
-                    </svg>
-                    <p className="p-0 m-0 fw-semibold">Edit Book</p>
-                  </button>
-                  <button className="delete-book px-1 w-100 py-2 d-flex gap-1 align-items-center justify-content-center">
-                    <img src="./assets/daftarbuku/trash-white.svg" alt="" />
-                    <p className="p-0 m-0 fw-semibold">Delete Book</p>
-                  </button>
-                </div>
-                <button className="w-100 py-2">Borrow</button>
-              </div> */}
           </div>
         </div>
       </div>

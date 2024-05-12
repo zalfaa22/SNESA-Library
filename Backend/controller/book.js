@@ -149,3 +149,28 @@ exports.deleteBook = async(request, response)=>{
         })
     })
 }
+
+exports.getBookById = async (request, response) => {
+    try {
+        const id = request.params.id;
+        const book = await modelBook.findByPk(id);
+        
+        if (!book) {
+            return response.status(404).json({
+                success: false,
+                message: `Book not found with ID ${id}`
+            });
+        }
+        
+        return response.json({
+            success: true,
+            data: book,
+            message: `Book details retrieved successfully`
+        });
+    } catch (error) {
+        return response.status(500).json({
+            success: false,
+            message: error.message
+        });
+    }
+};

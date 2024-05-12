@@ -28,7 +28,7 @@ function App() {
         <Routes>
           <Route path="/beranda" element={<Beranda/>} />
           <Route path="/daftarbuku" element={<DaftarBuku/>} />
-          <Route path="/peminjamanbuku" element={<Peminjaman/>} />
+          <Route path="/peminjamanbuku/:id" element={<Peminjaman/>} />
           <Route path="/daftarpeminjaman" element={<DaftarPeminjaman/>} />
           <Route path="/detailpeminjaman/:id" element={<DetailPeminjaman/>} />
           <Route path="/akun" element={<Akun/>} />

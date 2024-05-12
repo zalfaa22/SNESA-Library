@@ -166,6 +166,7 @@ export default function DaftarBuku() {
 
           {/* Tombol Tambah Buku */}
           <div className="navbar-kanan">
+            <Link to="/tambahbuku">
             <button className="add-container d-flex px-3 py-2 gap-2 align-items-center">
               <img
                 src="./assets/daftarbuku/add.svg"
@@ -174,6 +175,7 @@ export default function DaftarBuku() {
               />
               Tambah Buku
             </button>
+            </Link>
           </div>
         </div>
 
@@ -181,7 +183,7 @@ export default function DaftarBuku() {
         <div className="content-container d-flex flex-wrap gap-4">
           {filteredBuku.map((buku, index) => (
             <div key={buku.id} className="card-container px-4 py-4">
-              <img src={buku.pict} alt="Book Cover" className="d-flex mx-auto" />
+              <img src={"http://localhost:8080/foto/" +  buku.pict} alt="Book Cover" className="d-flex mx-auto img-fluid" />
               <div className="desc-container mt-3">
                 <h3 className="p-0 m-0 fw-bold mb-2">{buku.title}</h3>
                 <div className="desc d-flex align-items-center gap-2 mb-1">
@@ -203,17 +205,17 @@ export default function DaftarBuku() {
                 </div>
               </div>
               <div className="card-bottom">
-                <button className="detail py-1 px-3 mt-4 bg-transparent">
-                  <Link
+                <Link
                     to={{
                       pathname: `/detailbuku/${buku.id}`,
                       state: { selecteditem: buku },
                     }}
                     className="text-dark"
                   >
+                <button className="detail py-1 px-3 mt-4 bg-transparent">
                     <p className="text-start text-decoration-none m-0 p-0">Detail</p>
-                  </Link>
                 </button>
+                </Link>
               </div>
             </div>
           ))}

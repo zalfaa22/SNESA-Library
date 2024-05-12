@@ -1,34 +1,43 @@
 import React, { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import axios from "axios";
 import "../css/detailbuku.css";
-import { daftarBuku } from "./DaftarBuku";
 
 export default function DetailBuku() {
   const { id } = useParams();
-  const bukuId = id;
-  // const buku = daftarBuku.find((item) => item.id === bukuId);
+  const [book, setBook] = useState(null);
 
-  // if (!buku) {
-  //   return <div>Not Found</div>;
-  // }
-  // const [currentBuku, setCurrentBuku] = useState(bukuId);
-  // const buku = data.find((item) => item.id === currentBuku);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        if (!token) {
+          window.alert('Token not found!');
+          window.location = '/';
+          return;
+        }
 
-  // const nextBuku = () => {
-  //   if (currentBuku === data.length) {
-  //     setCurrentBuku(1);
-  //   } else {
-  //     setCurrentBuku(currentBuku + 1);
-  //   }
-  // };
+        const headerConfig = {
+          headers: { Authorization: `Bearer ${token}` },
+        };
 
-  // useEffect(() => {
-  //   setCurrentBuku(bukuId);
-  // }, [id]);
+        const url = `http://localhost:8080/book/${id}`;
+        const response = await axios.get(url, headerConfig);
+        const bookData = response.data;
+        console.log(bookData);
+        setBook(bookData.data);
+      } catch (error) {
+        console.error('Error fetching book data:', error);
+      }
+    };
 
-  // if (!buku) {
-  //   return <div>Not Found</div>;
-  // }
+    fetchData();
+  }, [id]);
+
+  if (!book) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <>
       <div className="content">
@@ -61,19 +70,19 @@ export default function DetailBuku() {
             </a>
             <div className="detail-container d-flex gap-4 m-0 bg-white px-4 py-4 w-100">
               <img
-                // src={buku.gambar}
+                src={book.pict}
                 alt=""
                 className="img-fluid col object-fit-cover"
               />
               <div className="desc-book col-12 col-md-6">
-                {/* <h3 className="mb-4 fw-semibold">{buku.judul}</h3> */}
+                <h3 className="mb-4 fw-semibold">{book.title}</h3>
                 <div className="sub-desc d-flex justify-content-between py-3">
                   <p className="nama-kolom p-0 m-0 fw-bold">ISBN</p>
-                  <p className="isi p-0 m-0 fw-normal">2670039</p>
+                  <p className="isi p-0 m-0 fw-normal">{book.code}</p>
                 </div>
                 <div className="sub-desc d-flex justify-content-between py-3">
                   <p className="nama-kolom p-0 m-0 fw-bold">Penulis</p>
-                  <p className="isi p-0 m-0 fw-normal">Michele Quach</p>
+                  <p className="isi p-0 m-0 fw-normal">{book.author}</p>
                 </div>
                 <div className="sub-desc d-flex justify-content-between py-3">
                   <p className="nama-kolom p-0 m-0 fw-bold">Penerbit</p>
@@ -86,7 +95,7 @@ export default function DetailBuku() {
                 </div>
                 <div className="sub-desc d-flex justify-content-between py-3">
                   <p className="nama-kolom p-0 m-0 fw-bold">Jenis Buku</p>
-                  <p className="isi p-0 m-0 fw-normal">Romance</p>
+                  <p className="isi p-0 m-0 fw-normal">{book.category}</p>
                 </div>
 
                 <div className="action row mx-0 mb-3 mt-5 gap-2 ">
