@@ -2,46 +2,13 @@ import React, { useEffect, useState } from "react";
 import "../css/peminjaman.css";
 import Modal from "react-bootstrap/Modal";
 import axios from "axios";
-import { useParams, useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
-export default function Peminjaman({ books }) {
+export default function Peminjaman() {
+  const [showModal, setShowModal] = useState(false);
   const { id } = useParams();
   const [book, setBook] = useState(null);
   const [borrow, setBorrow] = useState(null);
-  const [showModal, setShowModal] = useState(false);
-  const location = useLocation();
-  const [selectedBook, setSelectedBook] = useState(null);
-
-  useEffect(() => {
-    // Mengambil data buku terpilih dari properti location.state
-    if (location.state && location.state.selectedBook) {
-      setSelectedBook(location.state.selectedBook);
-    }
-  }, [location.state]);
-
-  // Fungsi untuk menangani pemilihan buku
-  const handleSelectBook = (book) => {
-    setSelectedBook(book); // Mengatur buku yang dipilih ke dalam state
-    console.log("Selected Book:", book); // Periksa nilai buku yang dipilih di sini
-  };
-
-  // // State untuk menyimpan buku yang dipilih
-  // const [selectedBook, setSelectedBook] = useState(null);
-
-  // // Fungsi untuk menangani pemilihan buku
-  // const handleSelectBook = (book) => {
-  //   setSelectedBook(book); // Mengatur buku yang dipilih ke dalam state
-  //   console.log("Selected Book:", book); // Periksa nilai buku yang dipilih di sini
-  // };
-
-  const handleShowModal = () => {
-    setShowModal(true);
-  };
-
-  const handleCloseModal = () => {
-    setShowModal(false);
-  };
-
   const [state, setState] = useState({
     borrow: [],
     book: [],
@@ -50,20 +17,60 @@ export default function Peminjaman({ books }) {
     student_name: "",
     class: "",
     absen: "",
-    date_of_borrow: "",
-    date_of_return: "",
+    date_of_borrow: new Date().toISOString().split('T')[0], // Tanggal hari ini
+    date_of_return: new Date(new Date().getTime() + 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0], // 7 hari dari hari ini
     status: "",
     penalty: "",
-    title: selectedBook ? selectedBook.title : "", // Mengisi title dari buku yang dipilih
-    author: selectedBook ? selectedBook.author : "",
-    category: selectedBook ? selectedBook.category : "",
-    pict: selectedBook ? selectedBook.pict : "",
+    title: "",
+    author: "",
+    category: "",
+    pict: "",
     token: "",
     action: "",
     keyword: "",
   });
 
-  const token = localStorage.getItem("token");
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        if (!token) {
+          window.alert('Token not found!');
+          window.location = '/';
+          return;
+        }
+
+        const headerConfig = {
+          headers: { Authorization: `Bearer ${token}` },
+        };
+
+        const url = `http://localhost:8080/book/${id}`;
+        const response = await axios.get(url, headerConfig);
+        const bookData = response.data;
+        console.log(bookData);
+        setBook(bookData.data);
+      } catch (error) {
+        console.error('Error fetching book data:', error);
+      }
+    };
+
+    fetchData();
+  }, [id]);
+
+  if (!book) {
+    return <div>Loading...</div>;
+  }
+
+  const handleShowModal = () => {
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+    window.location.href = "/daftarpeminjaman";
+  };
+
+  const token = localStorage.getItem('token');
 
   if (!token) {
     window.alert("Token not found!");
@@ -74,29 +81,34 @@ export default function Peminjaman({ books }) {
     headers: { Authorization: `Bearer ${token}` },
   };
 
-  const handleBorrowBook = () => {
-    // Lakukan permintaan HTTP untuk melakukan peminjaman buku
-    // Menggunakan data dari selectedBook
-    // Contoh:
-    axios.post('http://localhost:8080/borrow/a', selectedBook)
-      .then((response) => {
-        console.log('Borrow successful:', response.data);
-        // Tampilkan modal atau notifikasi sukses
-      })
-      .catch((error) => {
-        console.error('Error borrowing book:', error);
-        // Tampilkan pesan error kepada pengguna
-      });
+  const handleChange = (e) => {
+    setState({
+      ...state,
+      [e.target.name]: e.target.value,
+    });
   };
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    // Mengubah state sesuai dengan input yang diubah
-    setSelectedBook((prevBook) => ({
-      ...prevBook,
-      [name]: value,
-    }));
+  const handleAddPeminjaman = () => {
+    const data = {
+      code: book.code,
+      student_name: state.student_name,
+      class: state.class,
+      absen: state.absen,
+      date_of_borrow: state.date_of_borrow,
+      date_of_return: state.date_of_return,
+    };
+  
+    axios
+      .post("http://localhost:8080/borrow/add", data, headerConfig)
+      .then((response) => {
+        setShowModal(true);
+      })
+      .catch((error) => {
+        console.error("Error borrowing book:", error);
+      });
   };
+  
+
   return (
     <>
       <div className="content">
@@ -115,7 +127,7 @@ export default function Peminjaman({ books }) {
             <div className="cover-section col">
               <div className="gambar-container p-4 mb-5">
                 <img
-                  src=""
+                  src={"http://localhost:8080/foto/" +  book.pict}
                   alt="cover book"
                   className="img-fluid object-fit-cover"
                 />
@@ -124,6 +136,7 @@ export default function Peminjaman({ books }) {
                 className="px-3 py-2"
                 // onClick={handleShowModal}
                 // onClick={handleAddPeminjaman}
+                onClick={handleAddPeminjaman}
               >
                 Pinjam
               </button>
@@ -153,39 +166,21 @@ export default function Peminjaman({ books }) {
                 </Modal.Body>
               </Modal>
             </div>
-
-            {selectedBook && (
-        <div className="detail-container">
-          <h2 className="page-title">Peminjaman Buku</h2>
-          <div className="book-info">
-            <p>Judul: {selectedBook.title}</p>
-            <p>Penulis: {selectedBook.author}</p>
-            <p>ISBN: {selectedBook.code}</p>
-            {/* Tambahkan input untuk data peminjam */}
-            <input
-              type="text"
-              name="studentName"
-              placeholder="Nama Peminjam"
-              onChange={handleChange}
-            />
-            {/* Tambahkan tombol untuk melakukan peminjaman */}
-            <button onClick={handleBorrowBook}>Pinjam Buku</button>
-          </div>
-        </div>
-            )}
-            
+            {/* <div className="desc-book col-12 col-md-6"> */}
+            {/* <div className="deskripsi row m-0"> */}
             <div className="deskripsi col-6">
               <div className="form mb-3 w-100">
                 <p className="mb-1 fw-semibold">Judul buku</p>
                 <div className="d-flex event px-2 py-2">
-                <input
-  type="text"
-  id="title"
-  name="title"
-  value={state.title} // Gunakan state.title yang mengambil dari selectedBook.title
-  readOnly
-  className="form-control1"
-/>
+                  <input
+                    type="text"
+                    id="author"
+                    name="author"
+                    value={book.title}
+                    onChange={handleChange}
+                    className="form-control1"
+                    placeholder="Judul buku ..."
+                  />
                 </div>
               </div>
 
@@ -196,7 +191,7 @@ export default function Peminjaman({ books }) {
                     type="text"
                     id="author"
                     name="author"
-                    value={state.author}
+                    value={book.author}
                     onChange={handleChange}
                     className="form-control1"
                     placeholder="Penulis buku ..."
@@ -211,7 +206,7 @@ export default function Peminjaman({ books }) {
                     type="text"
                     id="author"
                     name="author"
-                    value={state.code}
+                    value={book.code}
                     onChange={handleChange}
                     className="form-control1"
                     placeholder="ISBN buku ..."
@@ -223,9 +218,9 @@ export default function Peminjaman({ books }) {
                 <div className="d-flex event px-2 py-2">
                   <input
                     type="text"
-                    id="author"
-                    name="author"
-                    value={state.author}
+                    id="student_name"
+                    name="student_name"
+                    value={state.student_name}
                     onChange={handleChange}
                     className="form-control1"
                     placeholder="Nama Peminjam ..."
@@ -238,8 +233,8 @@ export default function Peminjaman({ books }) {
                 <div className="d-flex event px-2 py-2">
                   <input
                     type="text"
-                    id="author"
-                    name="author"
+                    id="class"
+                    name="class"
                     value={state.class}
                     onChange={handleChange}
                     className="form-control1"
@@ -253,8 +248,8 @@ export default function Peminjaman({ books }) {
                 <div className="d-flex event px-2 py-2">
                   <input
                     type="text"
-                    id="author"
-                    name="author"
+                    id="absen"
+                    name="absen"
                     value={state.absen}
                     onChange={handleChange}
                     className="form-control1"
@@ -267,8 +262,8 @@ export default function Peminjaman({ books }) {
                 <div className="d-flex event px-2 py-2">
                   <input
                     type="text"
-                    id="author"
-                    name="author"
+                    id="date_of_borrow"
+                    name="date_of_borrow"
                     value={state.date_of_borrow}
                     onChange={handleChange}
                     className="form-control1"
@@ -281,8 +276,8 @@ export default function Peminjaman({ books }) {
                 <div className="d-flex event px-2 py-2">
                   <input
                     type="text"
-                    id="author"
-                    name="author"
+                    id="date_of_return"
+                    name="date_of_return"
                     value={state.date_of_return}
                     onChange={handleChange}
                     className="form-control1"

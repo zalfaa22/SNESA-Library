@@ -72,9 +72,9 @@ export default function DetailBuku() {
             </a>
             <div className="detail-container d-flex gap-4 m-0 bg-white px-4 py-4 w-100">
               <img
-                src={book.pict}
+                src={"http://localhost:8080/foto/" +  book.pict}
                 alt=""
-                className="img-fluid col object-fit-cover"
+                className="img-fluid col-5 object-fit-cover"
               />
               <div className="desc-book col-12 col-md-6">
                 <h3 className="mb-4 fw-semibold">{book.title}</h3>
