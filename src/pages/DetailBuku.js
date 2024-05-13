@@ -70,7 +70,25 @@ export default function DetailBuku() {
           <div className="px-3 px-md-5 py-4">
             <div className="mb-4 mb-md-5">
               <div className="d-flex justify-content-between">
-                <h2 className="fw-bold page-title">Detail Buku</h2>
+              
+            <div className="d-flex align-items-center gap-2">
+            <a href="/daftarbuku">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                fill="black"
+                class="bi bi-arrow-left"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"
+                />
+              </svg>
+            </a>
+                <h2 className="fw-bold page-title m-0">Detail Buku</h2>
+            </div>
                 <div className="profile-acc">
                   <img src="/assets/user-icon.svg" className="img-fluid" />
                 </div>
@@ -78,7 +96,7 @@ export default function DetailBuku() {
             </div>
 
             {/* Detail */}
-            <a href="/daftarbuku">
+            {/* <a href="/daftarbuku">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"
@@ -92,7 +110,7 @@ export default function DetailBuku() {
                   d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"
                 />
               </svg>
-            </a>
+            </a> */}
             <div className="detail-container d-md-flex flex-wrap gap-4 m-0 bg-white px-4 py-4 w-100">
               <img
                 src={"http://localhost:8080/foto/" +  book.pict}

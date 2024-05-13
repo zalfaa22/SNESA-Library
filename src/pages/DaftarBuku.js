@@ -230,7 +230,7 @@ export default function DaftarBuku() {
         </div>
 
         {/* CARD */}
-        <div className="content-container row m-0 d-flex flex-wrap gap-4">
+        {/* <div className="content-container row m-0 d-flex flex-wrap gap-4">
           {filteredBuku.map((buku, index) => (
             <div key={buku.id} className="card-container col-md-5 col-12 col-lg-4 col-xl-3 px-4 py-4">
               <img src={"http://localhost:8080/foto/" +  buku.pict} alt="Book Cover" className="d-flex mx-auto img-fluid" />
@@ -269,7 +269,56 @@ export default function DaftarBuku() {
               </div>
             </div>
           ))}
-        </div>
+        </div> */}
+
+        <div className="row row-cols-2 row-cols-md-2 row-cols-lg-4 g-3 g-md-4 content-container">
+        {filteredBuku.map((buku, index) => (
+              <div className="group" key={buku.id} >
+                <div className="col">
+                  <div className="p-3 card-container">
+                    <img
+                      src={"http://localhost:8080/foto/" +  buku.pict} alt="Book Cover"
+                      className="px-1 img-fluid w-100"
+                    />
+                    <div className="desc-container mt-3">
+                <h3 className="p-0 m-0 fw-bold mb-2">{buku.title}</h3>
+                <div className="desc d-flex align-items-center gap-2 mb-1">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    fill="currentColor"
+                    className="bi bi-pencil-fill"
+                    viewBox="0 0 16 16"
+                  >
+                    <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .175.032l.179-.178a.5.5 0 0 0 .11-.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11z" />
+                  </svg>
+                  <p className="p-0 m-0 fw-semibold">{buku.author}</p>
+                </div>
+                <div className="desc d-flex align-items-center gap-2">
+                  <img src="./assets/daftarBuku/Calendar.svg" alt="Calendar Icon" />
+                  <p className="p-0 m-0 fw-semibold">{buku.code}</p>
+                </div>
+              </div>
+              <div className="card-bottom">
+                <Link
+                    to={{
+                      pathname: `/detailbuku/${buku.id}`,
+                      state: { selecteditem: buku },
+                    }}
+                    className="text-dark"
+                  >
+                <button className="detail py-1 px-3 mt-4 bg-transparent">
+                    <p className="text-start text-decoration-none m-0 p-0">Detail</p>
+                </button>
+                </Link>
+              </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
       </div>
     </div>
   );

@@ -17,6 +17,8 @@
             border: 1px solid #41b06e;
             border-radius: 10px;
             width: 90%;
+
+            
             img {
               width: 15px;
             }
@@ -30,7 +32,12 @@
               }
               &:hover {
                 outline: none;
-                focus: none;
+                border: none;
+              
+              }
+              &:focus {
+                border: 0;
+                outline: 0;
               }
             }
           }

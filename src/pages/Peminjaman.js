@@ -158,7 +158,7 @@ export default function Peminjaman() {
                     buku berhasil dipinjam
                   </h5>
                   <button
-                    className="px-4 py-2 d-flex ms-auto cursor-pointer"
+                    className="px-4 py-2 d-flex mb-3 ms-auto cursor-pointer"
                     onClick={handleCloseModal}
                   >
                     Ok
