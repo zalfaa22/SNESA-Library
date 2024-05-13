@@ -1,4 +1,4 @@
-@media (max-width: 1440px) {
+/* @media (max-width: 1440px) { */
   .detailBuku {
     color: #141e46;
 
@@ -106,7 +106,7 @@
 
     }
   }
-}
+/* } */
 
 @media (max-width: 768px) {
 }

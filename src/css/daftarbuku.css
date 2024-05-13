@@ -1,4 +1,4 @@
-@media (max-width: 1440px) {
+@media (min-width: 326px) {
   .content {
     &.daftarBuku {
       color: #141e46;

@@ -232,7 +232,7 @@ export default function DaftarBuku() {
         {/* CARD */}
         <div className="content-container row m-0 d-flex flex-wrap gap-4">
           {filteredBuku.map((buku, index) => (
-            <div key={buku.id} className="card-container col-md-3 col-12 col-lg-4 px-4 py-4">
+            <div key={buku.id} className="card-container col-md-5 col-12 col-lg-4 col-xl-3 px-4 py-4">
               <img src={"http://localhost:8080/foto/" +  buku.pict} alt="Book Cover" className="d-flex mx-auto img-fluid" />
               <div className="desc-container mt-3">
                 <h3 className="p-0 m-0 fw-bold mb-2">{buku.title}</h3>

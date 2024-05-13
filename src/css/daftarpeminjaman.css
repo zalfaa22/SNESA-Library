@@ -1,4 +1,4 @@
-@media (max-width: 1440px) {
+/* @media (min-width: 326px) { */
   .search-container {
     width: 32%;
     border: 1px solid #41b06e;
@@ -63,7 +63,7 @@
      
     }
   }
-}
+/* } */
 
 @media (max-width: 768px) {
   .search-container {
